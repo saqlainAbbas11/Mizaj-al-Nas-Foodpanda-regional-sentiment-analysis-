@@ -135,13 +135,23 @@ def analyze(text: str) -> dict:
         tok_r, model_r, id2label_r = _LocalModels.get_roman_urdu()
         label_g, conf_g, scores_g = _predict_local(text, tok_g, model_g, id2label_g)
         label_r, conf_r, scores_r = _predict_local(text, tok_r, model_r, id2label_r)
+        roman_urdu_model_name = "Khubaib01 (Roman Urdu specialist)"
     else:
         label_g, conf_g, scores_g = _predict_api(text, config.MODEL_GENERAL)
-        label_r, conf_r, scores_r = _predict_api(text, config.MODEL_ROMAN_URDU)
+        # Community fine-tunes like Khubaib01 are often NOT hosted by HF Inference
+        # Providers. Fall back to the general model for the second slot so the tester
+        # still works — the user gets two opinions from the same reliable model rather
+        # than a crash.
+        try:
+            label_r, conf_r, scores_r = _predict_api(text, config.MODEL_ROMAN_URDU)
+            roman_urdu_model_name = "Khubaib01 (Roman Urdu specialist)"
+        except RuntimeError:
+            label_r, conf_r, scores_r = label_g, conf_g, scores_g
+            roman_urdu_model_name = "cardiffnlp (fallback — specialist unavailable)"
 
     if lang == "roman_urdu_mixed":
         primary_label, primary_conf, primary_scores = label_r, conf_r, scores_r
-        primary_model = "Khubaib01 (Roman Urdu specialist)"
+        primary_model = roman_urdu_model_name
     else:
         primary_label, primary_conf, primary_scores = label_g, conf_g, scores_g
         primary_model = "cardiffnlp (general multilingual)"
@@ -155,6 +165,7 @@ def analyze(text: str) -> dict:
         "models_agree": label_g == label_r,
         "breakdown": {
             "general_model": {"label": label_g, "confidence": round(conf_g, 4), "scores": scores_g},
-            "roman_urdu_model": {"label": label_r, "confidence": round(conf_r, 4), "scores": scores_r},
+            "roman_urdu_model": {"label": label_r, "confidence": round(conf_r, 4), "scores": scores_r,
+                                 "name": roman_urdu_model_name},
         },
     }
