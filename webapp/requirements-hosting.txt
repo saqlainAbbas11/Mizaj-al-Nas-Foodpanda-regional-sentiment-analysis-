@@ -8,3 +8,4 @@ duckdb==1.5.5
 python-dotenv==1.0.1
 gunicorn==23.0.0
 groq==1.7.0
+huggingface-hub>=0.23.2
