@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Explore Reviews by Region{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+
+  <!-- breadcrumb -->
+  <div id="breadcrumb" class="flex items-center gap-2 text-sm text-txt-muted mb-8">
+    <button onclick="showProvinces()" class="hover:text-txt transition">All Provinces</button>
+  </div>
+
+  <!-- ================= VIEW 1: PROVINCES ================= -->
+  <div id="view-provinces">
+    <h1 class="font-display font-bold text-3xl md:text-4xl mb-2 text-txt">Browse by province</h1>
+    <p class="text-txt-sub mb-10">Pick a province to see its cities, or jump straight to a city you know.</p>
+    <div id="province-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for i in range(5) %}
+      <div class="skeleton h-56 rounded-3xl"></div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- ================= VIEW 2: CITIES IN PROVINCE ================= -->
+  <div id="view-cities" class="hidden">
+    <h1 id="cities-title" class="font-display font-bold text-3xl md:text-4xl mb-2 text-txt"></h1>
+    <p class="text-txt-sub mb-10">Sentiment mix from the text of every review, not just the star average.</p>
+    <div id="city-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+  </div>
+
+  <!-- ================= VIEW 3: CITY DETAIL ================= -->
+  <div id="view-city-detail" class="hidden">
+    <div class="banner-wrap h-64 rounded-3xl mb-8">
+      <img id="city-banner-img" src="" alt="">
+      <div class="banner-fade"></div>
+      <div class="absolute bottom-0 left-0 p-6">
+        <h1 id="city-detail-title" class="font-display font-bold text-3xl md:text-4xl text-txt"></h1>
+        <p id="city-detail-sub" class="text-txt-sub text-sm mt-1"></p>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-6 mb-10">
+      <div class="glass rounded-2xl p-6 lg:col-span-1">
+        <h3 class="font-display font-semibold text-lg mb-4 text-txt">Sentiment mix</h3>
+        <div class="h-52"><canvas id="city-sentiment-chart"></canvas></div>
+      </div>
+      <div class="glass rounded-2xl p-6 lg:col-span-2">
+        <h3 class="font-display font-semibold text-lg mb-4 text-txt">What people mention most, and how often it's negative</h3>
+        <div id="city-aspects" class="space-y-3"></div>
+      </div>
+    </div>
+
+    <h3 class="font-display font-semibold text-xl mb-4 text-txt">Restaurants in this city</h3>
+    <div class="flex gap-3 mb-5">
+      <input id="restaurant-search" type="search" placeholder="Search restaurant name..."
+             class="flex-1 rounded-xl px-4 py-2.5 text-sm" oninput="debouncedSearchRestaurants()">
+    </div>
+    <div id="restaurant-list" class="space-y-3"></div>
+    <div class="flex justify-center gap-3 mt-6">
+      <button id="resto-prev" onclick="changeRestaurantPage(-1)" class="glass glass-hover rounded-full px-4 py-2 text-sm disabled:opacity-30 inline-flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg> Prev</button>
+      <span id="resto-page-label" class="text-sm text-txt-muted self-center"></span>
+      <button id="resto-next" onclick="changeRestaurantPage(1)" class="glass glass-hover rounded-full px-4 py-2 text-sm disabled:opacity-30 inline-flex items-center gap-1">Next <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/sentiment_ui.js') }}"></script>
+<script src="{{ url_for('static', filename='js/user.js') }}"></script>
+{% endblock %}

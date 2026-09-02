@@ -1,0 +1,6 @@
+method,language,accuracy,macro_f1,n_test
+cardiffnlp (general multilingual),roman_urdu,0.48838358872960946,0.48808290263677995,4046
+Khubaib01 (Roman Urdu specialist),roman_urdu,0.6794364804745427,0.6811443331038097,4046
+data-driven lexicon,roman_urdu,0.4681166584280771,0.4377514641761122,4046
+cardiffnlp (general multilingual),english,0.6796646043633996,0.6824055883122426,12284
+Khubaib01 (Roman Urdu specialist),english,0.6434386193422338,0.6402414921131586,12284

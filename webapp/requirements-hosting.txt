@@ -1,0 +1,10 @@
+# Lightweight requirements for HOSTING (Render, Fly.io, etc.)
+# Does NOT include torch/transformers/sentencepiece (~2GB) since SENTIMENT_MODE=api
+# on free-tier hosting (512MB RAM). For local development with the live tester,
+# use requirements.txt instead which includes the full ML stack.
+flask==3.1.3
+pandas==2.2.3
+duckdb==1.5.5
+python-dotenv==1.0.1
+gunicorn==23.0.0
+groq==1.7.0

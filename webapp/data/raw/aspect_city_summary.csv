@@ -1,0 +1,189 @@
+city,aspect,mentions,pct_negative,reliable_sample
+Abbottabad,taste,5872,41.28065395095368,True
+Abbottabad,quantity,2683,59.895639209839736,True
+Abbottabad,price,996,61.64658634538153,True
+Abbottabad,delivery_rider,974,48.56262833675565,True
+Abbottabad,hygiene,506,85.37549407114624,True
+Abbottabad,packaging,487,53.59342915811089,True
+Abbottabad,service,255,51.76470588235295,True
+Bahawalpur,taste,9630,38.795430944963655,True
+Bahawalpur,quantity,3672,52.75054466230937,True
+Bahawalpur,delivery_rider,1402,47.07560627674751,True
+Bahawalpur,price,1271,57.35641227380016,True
+Bahawalpur,packaging,1113,36.837376460017964,True
+Bahawalpur,hygiene,760,85.78947368421052,True
+Bahawalpur,service,468,53.84615384615385,True
+Dera Ghazi Khan,taste,648,32.71604938271605,True
+Dera Ghazi Khan,quantity,230,56.95652173913044,True
+Dera Ghazi Khan,delivery_rider,143,42.65734265734265,True
+Dera Ghazi Khan,price,103,62.13592233009708,True
+Dera Ghazi Khan,hygiene,50,70.0,True
+Dera Ghazi Khan,packaging,48,43.75,True
+Dera Ghazi Khan,service,45,44.44444444444444,True
+Faisalabad,taste,23752,38.48939036712698,True
+Faisalabad,quantity,9646,56.71781049139539,True
+Faisalabad,price,3447,56.193791702930085,True
+Faisalabad,delivery_rider,3413,49.39935540580135,True
+Faisalabad,packaging,2186,52.24153705397987,True
+Faisalabad,hygiene,1665,83.72372372372372,True
+Faisalabad,service,923,56.44637053087757,True
+Gujranwala,taste,9885,35.518462316641376,True
+Gujranwala,quantity,3426,54.903677758318736,True
+Gujranwala,delivery_rider,1393,48.16941852117731,True
+Gujranwala,price,1342,59.910581222056635,True
+Gujranwala,packaging,803,54.66998754669987,True
+Gujranwala,hygiene,721,83.49514563106796,True
+Gujranwala,service,393,55.216284987277355,True
+Gujrat,taste,4864,34.72450657894737,True
+Gujrat,quantity,1871,56.7076429716729,True
+Gujrat,delivery_rider,834,46.402877697841724,True
+Gujrat,price,680,59.85294117647059,True
+Gujrat,packaging,443,48.98419864559819,True
+Gujrat,hygiene,367,80.10899182561307,True
+Gujrat,service,174,59.77011494252874,True
+Hyderabad,taste,16037,36.016711354991585,True
+Hyderabad,quantity,6571,53.90351544665957,True
+Hyderabad,delivery_rider,3109,43.004181408813125,True
+Hyderabad,price,3028,55.317040951122856,True
+Hyderabad,hygiene,1722,81.76538908246226,True
+Hyderabad,packaging,1288,50.77639751552795,True
+Hyderabad,service,897,46.599777034559644,True
+Islamabad,taste,34732,43.3749856040539,True
+Islamabad,quantity,14866,56.00699582940939,True
+Islamabad,price,6383,59.18846937176876,True
+Islamabad,delivery_rider,5456,55.260263929618766,True
+Islamabad,hygiene,4460,79.68609865470852,True
+Islamabad,packaging,4281,54.94043447792571,True
+Islamabad,service,1938,52.94117647058824,True
+Jhelum,taste,2799,32.97606287959985,True
+Jhelum,quantity,1052,52.946768060836504,True
+Jhelum,delivery_rider,519,41.23314065510597,True
+Jhelum,price,352,53.69318181818182,True
+Jhelum,packaging,217,48.8479262672811,True
+Jhelum,hygiene,196,86.73469387755102,True
+Jhelum,service,162,46.2962962962963,True
+Karachi,taste,145375,41.06620808254514,True
+Karachi,quantity,65593,54.99824676413642,True
+Karachi,price,26211,55.331730952653466,True
+Karachi,delivery_rider,23373,50.19894750352971,True
+Karachi,hygiene,17393,83.3323750934284,True
+Karachi,packaging,13561,53.29253004940638,True
+Karachi,service,7759,52.71297847660781,True
+Lahore,taste,150379,40.16850757087093,True
+Lahore,quantity,66247,53.330716862650384,True
+Lahore,price,25413,55.290599299571085,True
+Lahore,delivery_rider,20481,53.24447048483961,True
+Lahore,packaging,15914,50.76662058564786,True
+Lahore,hygiene,14947,83.02669431993041,True
+Lahore,service,7293,51.5562868504045,True
+Larkana,taste,556,34.71223021582734,True
+Larkana,quantity,247,63.96761133603239,True
+Larkana,delivery_rider,142,29.577464788732392,True
+Larkana,price,89,61.79775280898876,True
+Larkana,service,55,32.72727272727273,True
+Larkana,packaging,53,50.943396226415096,True
+Larkana,hygiene,44,93.18181818181817,True
+Mardan,taste,324,41.66666666666667,True
+Mardan,quantity,158,65.18987341772153,True
+Mardan,delivery_rider,112,41.07142857142857,True
+Mardan,price,71,63.38028169014085,True
+Mardan,service,39,46.15384615384615,True
+Mardan,hygiene,24,91.66666666666666,True
+Mardan,packaging,23,52.17391304347826,True
+Multan,taste,20252,40.12936993877148,True
+Multan,quantity,8357,56.97020461888237,True
+Multan,price,2943,57.42439687393816,True
+Multan,delivery_rider,2861,50.15728766165677,True
+Multan,packaging,1760,53.92045454545455,True
+Multan,hygiene,1575,86.22222222222223,True
+Multan,service,849,58.5394581861013,True
+Murree,taste,22,54.54545454545454,True
+Murree,delivery_rider,9,66.66666666666666,False
+Murree,quantity,7,57.14285714285714,False
+Murree,price,6,100.0,False
+Murree,hygiene,3,100.0,False
+Murree,service,3,33.33333333333333,False
+Okara,taste,797,35.257214554579676,True
+Okara,quantity,267,52.80898876404494,True
+Okara,price,109,58.71559633027523,True
+Okara,delivery_rider,102,34.31372549019608,True
+Okara,packaging,63,44.44444444444444,True
+Okara,hygiene,50,86.0,True
+Okara,service,39,46.15384615384615,True
+Peshawar,taste,7530,41.699867197875164,True
+Peshawar,quantity,3471,61.336790550273705,True
+Peshawar,delivery_rider,1455,46.32302405498282,True
+Peshawar,price,1454,61.691884456671254,True
+Peshawar,packaging,760,52.76315789473684,True
+Peshawar,hygiene,724,83.14917127071824,True
+Peshawar,service,405,49.876543209876544,True
+Quetta,taste,2777,38.24270795822831,True
+Quetta,quantity,892,61.43497757847533,True
+Quetta,delivery_rider,650,44.92307692307692,True
+Quetta,price,554,55.77617328519856,True
+Quetta,hygiene,299,83.27759197324414,True
+Quetta,packaging,290,61.37931034482759,True
+Quetta,service,145,53.103448275862064,True
+Rahim Yar Khan,taste,3578,40.2738960313024,True
+Rahim Yar Khan,quantity,1318,56.373292867981796,True
+Rahim Yar Khan,delivery_rider,606,40.5940594059406,True
+Rahim Yar Khan,price,469,59.914712153518124,True
+Rahim Yar Khan,hygiene,241,86.72199170124482,True
+Rahim Yar Khan,packaging,206,54.36893203883495,True
+Rahim Yar Khan,service,152,47.368421052631575,True
+Rawalpindi,taste,36069,38.56220022734204,True
+Rawalpindi,quantity,14174,55.08677860872019,True
+Rawalpindi,price,5640,57.234042553191486,True
+Rawalpindi,delivery_rider,5265,48.566001899335234,True
+Rawalpindi,packaging,4074,47.889052528227786,True
+Rawalpindi,hygiene,3360,79.9702380952381,True
+Rawalpindi,service,1761,49.51731970471323,True
+Sadiqabad,taste,738,36.58536585365854,True
+Sadiqabad,quantity,242,59.917355371900825,True
+Sadiqabad,delivery_rider,122,39.34426229508197,True
+Sadiqabad,price,86,56.97674418604651,True
+Sadiqabad,hygiene,39,82.05128205128204,True
+Sadiqabad,service,30,46.666666666666664,True
+Sadiqabad,packaging,29,51.724137931034484,True
+Sahiwal,taste,5405,36.13320999074931,True
+Sahiwal,quantity,2030,54.63054187192118,True
+Sahiwal,price,707,54.31400282885431,True
+Sahiwal,delivery_rider,652,48.77300613496933,True
+Sahiwal,packaging,484,51.446280991735534,True
+Sahiwal,hygiene,362,84.25414364640883,True
+Sahiwal,service,158,51.26582278481012,True
+Sargodha,taste,9412,38.14279643008925,True
+Sargodha,quantity,3906,56.32360471070148,True
+Sargodha,price,1389,54.21166306695464,True
+Sargodha,delivery_rider,1375,46.32727272727273,True
+Sargodha,packaging,859,52.15366705471478,True
+Sargodha,hygiene,769,85.56566970091028,True
+Sargodha,service,388,50.25773195876289,True
+Sheikhupura,taste,818,34.474327628361856,True
+Sheikhupura,quantity,300,60.66666666666667,True
+Sheikhupura,delivery_rider,136,38.970588235294116,True
+Sheikhupura,price,101,51.48514851485149,True
+Sheikhupura,packaging,54,57.407407407407405,True
+Sheikhupura,hygiene,48,83.33333333333334,True
+Sheikhupura,service,37,51.35135135135135,True
+Sialkot,taste,14998,37.39831977597013,True
+Sialkot,quantity,5772,55.38808038808038,True
+Sialkot,delivery_rider,2144,49.76679104477612,True
+Sialkot,price,1905,59.00262467191602,True
+Sialkot,hygiene,1258,85.45310015898251,True
+Sialkot,packaging,1258,53.65659777424483,True
+Sialkot,service,654,55.65749235474006,True
+Sukkur,taste,1595,42.758620689655174,True
+Sukkur,quantity,803,62.889165628891654,True
+Sukkur,delivery_rider,325,43.69230769230769,True
+Sukkur,price,275,60.0,True
+Sukkur,packaging,192,44.79166666666667,True
+Sukkur,hygiene,181,86.1878453038674,True
+Sukkur,service,93,50.53763440860215,True
+Wah Cantt,taste,4883,34.44603727216875,True
+Wah Cantt,quantity,1864,55.311158798283266,True
+Wah Cantt,delivery_rider,778,47.04370179948586,True
+Wah Cantt,price,669,54.26008968609865,True
+Wah Cantt,packaging,416,49.27884615384615,True
+Wah Cantt,hygiene,350,82.57142857142857,True
+Wah Cantt,service,215,57.20930232558139,True

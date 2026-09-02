@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Mizaj al-Nas — مزاج الناس | Sentiment of the People{% endblock %}</title>
+<meta name="description" content="Independent sentiment analysis of 1.5M+ Pakistan food delivery reviews — beyond star ratings.">
+<meta name="author" content="Saqlain Abbas">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          page:     'var(--bg-page)',
+          surface:  'var(--bg-surface)',
+          surface2: 'var(--bg-surface2)',
+          elevated: 'var(--bg-elevated)',
+          brand:    { DEFAULT: 'var(--brand)', light: 'var(--brand-light)' },
+          mint:     'var(--mint)',
+          'accent-gold': 'var(--accent-gold)',
+          amber:    'var(--amber)',
+          positive: 'var(--positive)',
+          neutralc: 'var(--neutralc)',
+          negative: 'var(--negative)',
+          txt:      { DEFAULT: 'var(--text-primary)', muted: 'var(--text-muted)', sub: 'var(--text-secondary)' },
+        },
+        fontFamily: {
+          sans: ['"Inter"', 'ui-sans-serif', 'system-ui'],
+          display: ['"Sora"', '"Inter"', 'ui-sans-serif'],
+          urdu: ['"Noto Nastaliq Urdu"', '"Amiri"', 'serif'],
+          arabic: ['"Amiri"', '"Noto Nastaliq Urdu"', 'serif'],
+          mono: ['"JetBrains Mono"', '"Fira Code"', 'monospace'],
+        },
+        boxShadow: { glow: '0 0 40px -10px var(--brand-glow)' }
+      }
+    }
+  }
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+
+<!-- Theme initialization before paint -->
+<script>
+  (function() {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  })();
+</script>
+
+{% block head %}{% endblock %}
+</head>
+<body class="bg-page text-txt font-sans antialiased min-h-screen flex flex-col">
+
+<!-- Ajrak band at top -->
+<div class="ajrak-band"></div>
+
+<nav class="sticky top-0 z-50 backdrop-blur-md border-b" style="background:var(--nav-bg);border-color:var(--border-color)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-2.5 no-underline">
+      <div class="logo-mark">
+        <span class="logo-arabic">مزاج الناس</span>
+      </div>
+      <div class="logo-text hidden sm:flex" style="flex-direction:column;gap:1px;line-height:1">
+        <span class="logo-name">Mizaj-al-Nas<span class="logo-pk">.pk</span></span>
+        <span class="logo-sub">The sentiment of the people</span>
+      </div>
+    </a>
+
+    <!-- Desktop nav -->
+    <div class="hidden md:flex items-center gap-8 text-sm font-medium text-txt-sub">
+      <a href="/user" class="hover:text-txt transition flex items-center gap-1.5 {% if request.path.startswith('/user') %}text-txt font-semibold{% endif %}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+        Explore Data
+      </a>
+      <a href="/owner" class="hover:text-txt transition flex items-center gap-1.5 {% if request.path.startswith('/owner') %}text-txt font-semibold{% endif %}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Owner Portal
+      </a>
+      <a href="/tester" class="hover:text-txt transition flex items-center gap-1.5 {% if request.path == '/tester' %}text-txt font-semibold{% endif %}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        Live Tester
+      </a>
+      <a href="/methodology" class="hover:text-txt transition flex items-center gap-1.5 {% if request.path == '/methodology' %}text-txt font-semibold{% endif %}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Methodology
+      </a>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.73 12.73l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+        </svg>
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
+        </svg>
+      </button>
+      <a href="/tester" class="hidden lg:inline-flex items-center gap-1.5 rounded-full hover:opacity-90 transition px-4 py-2 text-sm font-semibold text-white" style="background:var(--brand)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        Try it live
+      </a>
+      <button id="mobile-menu-btn" class="md:hidden text-txt-sub">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+      </button>
+    </div>
+  </div>
+  <div id="mobile-menu" class="hidden md:hidden border-t px-6 py-4 flex flex-col gap-3 text-sm" style="border-color:var(--border-color)">
+    <a href="/user" class="text-txt-sub hover:text-txt flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+      Explore Data</a>
+    <a href="/owner" class="text-txt-sub hover:text-txt flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Owner Portal</a>
+    <a href="/tester" class="text-txt-sub hover:text-txt flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+      Live Tester</a>
+    <a href="/methodology" class="text-txt-sub hover:text-txt flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      Methodology</a>
+  </div>
+</nav>
+
+<main class="flex-1">
+  {% block content %}{% endblock %}
+</main>
+
+<!-- Footer with author credit -->
+<footer class="border-t mt-16" style="border-color:var(--footer-border)">
+  <div class="ajrak-band"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+    <div class="grid md:grid-cols-3 gap-8 mb-8">
+      <!-- About -->
+      <div>
+        <h4 class="font-display font-semibold text-sm text-txt mb-3">مزاج الناس — Mizaj al-Nas</h4>
+        <p class="text-xs text-txt-muted leading-relaxed">{{ disclaimer or "Independent student research project analyzing publicly available Foodpanda review data. Not affiliated with, sponsored by, or endorsed by Foodpanda." }}</p>
+      </div>
+      <!-- Quick links -->
+      <div>
+        <h4 class="font-display font-semibold text-sm text-txt mb-3">Explore</h4>
+        <div class="flex flex-col gap-2 text-xs text-txt-muted">
+          <a href="/user" class="hover:text-txt transition">Browse by Province</a>
+          <a href="/owner" class="hover:text-txt transition">Restaurant Owner Portal</a>
+          <a href="/tester" class="hover:text-txt transition">Live Sentiment Tester</a>
+          <a href="/methodology" class="hover:text-txt transition">Full Methodology</a>
+        </div>
+      </div>
+      <!-- Author -->
+      <div>
+        <h4 class="font-display font-semibold text-sm text-txt mb-3">Built by</h4>
+        <div class="author-card glass">
+          <div class="author-avatar">SA</div>
+          <div>
+            <div class="font-display font-semibold text-sm text-txt">Saqlain Abbas</div>
+            <div class="text-xs text-txt-muted mb-1">End-to-end ML pipeline & web platform</div>
+            <a href="https://linkedin.com/in/saqlainabbas11" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-xs text-brand hover:underline">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn Profile
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="border-t pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-txt-muted" style="border-color:var(--footer-border)">
+      <p>1,552,204 reviews analyzed across 27 cities in Pakistan</p>
+      <p class="urdu-heading text-accent-gold text-xs opacity-60" dir="rtl">پاکستان کے ذائقوں کی ڈیجیٹل کہانی</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu
+  document.getElementById('mobile-menu-btn')?.addEventListener('click', () => {
+    document.getElementById('mobile-menu').classList.toggle('hidden');
+  });
+
+  // Theme toggle
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      html.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+    } else {
+      html.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    }
+    window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: isDark ? 'light' : 'dark' } }));
+  }
+
+  function currentTheme() {
+    return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  }
+
+  function chartColors() {
+    const s = getComputedStyle(document.documentElement);
+    return {
+      grid: s.getPropertyValue('--chart-grid').trim(),
+      text: s.getPropertyValue('--chart-text').trim(),
+      border: s.getPropertyValue('--chart-border').trim(),
+      positive: s.getPropertyValue('--positive').trim(),
+      negative: s.getPropertyValue('--negative').trim(),
+      neutralc: s.getPropertyValue('--neutralc').trim(),
+      brand: s.getPropertyValue('--brand').trim(),
+      mint: s.getPropertyValue('--mint').trim(),
+      accentGold: s.getPropertyValue('--accent-gold').trim(),
+    };
+  }
+</script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

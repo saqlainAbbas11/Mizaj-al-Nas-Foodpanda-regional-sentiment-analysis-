@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %}Owner Portal — Restaurant Intelligence Dashboard{% endblock %}
+
+{% block content %}
+<!-- ===== HERO ===== -->
+<section class="relative overflow-hidden border-b" style="border-color:var(--border-color)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-14 md:py-20">
+    <div class="grid md:grid-cols-2 gap-10 items-center">
+      <div>
+        <div class="urdu-heading text-accent-gold text-sm mb-2 opacity-70" dir="rtl">ریستوران کے مالک کا پورٹل</div>
+        <h1 class="font-display font-bold text-3xl md:text-4xl lg:text-5xl mb-4 text-txt leading-tight">
+          Your customers are<br><span class="grad-text">telling you everything.</span>
+        </h1>
+        <p class="text-txt-sub text-base md:text-lg max-w-lg leading-relaxed mb-6">
+          Search your restaurant to see an AI-powered complaint breakdown, sentiment trends, and talk to an assistant that's read every single one of your reviews.
+        </p>
+        <div class="flex flex-wrap gap-2 mb-6">
+          <span class="stat-pill">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            Real-time sentiment analysis
+          </span>
+          <span class="stat-pill">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            AI assistant grounded in your data
+          </span>
+        </div>
+      </div>
+      <!-- Right side: Feature cards -->
+      <div class="space-y-3">
+        <div class="glass rounded-2xl p-5 glass-hover flex gap-4 items-start">
+          <div class="icon-wrap flex-shrink-0" style="background:var(--brand-light)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <div>
+            <h3 class="font-display font-semibold text-sm text-txt mb-1">Find your restaurant</h3>
+            <p class="text-xs text-txt-muted leading-relaxed">Search by name from our database of thousands of restaurants across 27 cities in Pakistan.</p>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-5 glass-hover flex gap-4 items-start">
+          <div class="icon-wrap gold flex-shrink-0" style="background:var(--accent-gold-light)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-4"/></svg>
+          </div>
+          <div>
+            <h3 class="font-display font-semibold text-sm text-txt mb-1">See your complaint breakdown</h3>
+            <p class="text-xs text-txt-muted leading-relaxed">Aspect-level analysis across taste, price, delivery, hygiene, packaging, quantity, and service — ranked by severity.</p>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-5 glass-hover flex gap-4 items-start">
+          <div class="icon-wrap mint flex-shrink-0" style="background:rgba(13,155,110,0.08)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div>
+            <h3 class="font-display font-semibold text-sm text-txt mb-1">Ask the AI assistant</h3>
+            <p class="text-xs text-txt-muted leading-relaxed">Chat with an assistant that's read all your reviews. Ask "what should I fix first?" — it answers from your actual data, not generic advice.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEARCH ===== -->
+<section class="max-w-3xl mx-auto px-4 sm:px-6 py-12">
+  <div class="text-center mb-8">
+    <div class="inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs text-txt-muted mb-4">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      Powered by dual-transformer ensemble — the same models that scored 1.5M+ reviews
+    </div>
+    <h2 class="font-display font-bold text-xl md:text-2xl text-txt mb-2">Search your restaurant</h2>
+    <p class="text-sm text-txt-sub">Type your restaurant name below. Results update as you type.</p>
+  </div>
+
+  <div class="glass rounded-2xl p-2 flex gap-2 items-center">
+    <div class="pl-3 text-txt-muted">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </div>
+    <input id="owner-search-input" type="search" placeholder="e.g. Karachi Biryani, Cheezious, Bamya's..."
+           class="flex-1 rounded-xl px-3 py-3.5 text-sm bg-transparent border-0 focus:ring-0"
+           oninput="debouncedSearch()">
+  </div>
+
+  <div id="owner-search-results" class="mt-6 space-y-3"></div>
+
+  <!-- How it works -->
+  <div class="mt-16">
+    <div class="text-center mb-8">
+      <h3 class="font-display font-semibold text-lg text-txt mb-2">How the owner dashboard works</h3>
+      <p class="text-sm text-txt-sub">Your review data goes through a 10-stage NLP pipeline before reaching this dashboard.</p>
+    </div>
+    <div class="grid sm:grid-cols-3 gap-4">
+      <div class="glass rounded-2xl p-5 text-center">
+        <div class="w-10 h-10 rounded-full mx-auto mb-3 flex items-center justify-center text-white text-sm font-bold" style="background:var(--brand)">1</div>
+        <h4 class="font-display font-semibold text-sm text-txt mb-2">Dual-model scoring</h4>
+        <p class="text-xs text-txt-muted leading-relaxed">Every review is scored by two transformer models — a general multilingual model and a Roman Urdu specialist. Disagreements are flagged, not hidden.</p>
+      </div>
+      <div class="glass rounded-2xl p-5 text-center">
+        <div class="w-10 h-10 rounded-full mx-auto mb-3 flex items-center justify-center text-white text-sm font-bold" style="background:var(--brand)">2</div>
+        <h4 class="font-display font-semibold text-sm text-txt mb-2">Aspect extraction</h4>
+        <p class="text-xs text-txt-muted leading-relaxed">7 keyword categories (taste, price, delivery, hygiene, packaging, quantity, service) with multilingual dictionaries catch specific complaints.</p>
+      </div>
+      <div class="glass rounded-2xl p-5 text-center">
+        <div class="w-10 h-10 rounded-full mx-auto mb-3 flex items-center justify-center text-white text-sm font-bold" style="background:var(--brand)">3</div>
+        <h4 class="font-display font-semibold text-sm text-txt mb-2">AI assistant</h4>
+        <p class="text-xs text-txt-muted leading-relaxed">The chatbot is grounded in your real aggregated data — sentiment mix, aspect breakdowns, and top complaints — so every answer is specific to your restaurant.</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/sentiment_ui.js') }}"></script>
+<script src="{{ url_for('static', filename='js/owner_search.js') }}"></script>
+{% endblock %}

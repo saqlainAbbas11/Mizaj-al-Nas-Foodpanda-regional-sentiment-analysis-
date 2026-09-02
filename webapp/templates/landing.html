@@ -1,0 +1,407 @@
+{% extends "base.html" %}
+{% block title %}Mizaj al-Nas — مزاج الناس | Pakistan Food Sentiment Analysis{% endblock %}
+
+{% block content %}
+
+<!-- ===== HERO — Full SVG showcase, no text overlay ===== -->
+<section class="relative">
+  <div class="w-full" style="max-height:520px;overflow:hidden">
+    <img src="{{ url_for('static', filename='img/banners/main.svg') }}" alt="Mizaj al-Nas — مزاج الناس | Pakistan Food Sentiment Analysis" class="w-full h-auto object-contain" style="display:block">
+  </div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 -mt-2 pb-8">
+    <div class="flex flex-wrap items-center gap-3 justify-center">
+      <a href="/user" class="rounded-full hover:opacity-90 transition px-6 py-3 font-semibold text-white shadow-glow inline-flex items-center gap-2" style="background:var(--brand)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+        Explore as a customer
+      </a>
+      <a href="/owner" class="rounded-full glass glass-hover px-6 py-3 font-semibold text-txt inline-flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        I own a restaurant
+      </a>
+      <a href="/tester" class="rounded-full glass glass-hover px-6 py-3 font-semibold text-txt inline-flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        Try live tester
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LANGUAGE CHALLENGE ===== -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-16 text-center">
+  <div class="urdu-heading text-accent-gold text-2xl md:text-4xl mb-6 opacity-70" dir="rtl">بسم اللہ الرحمن الرحیم</div>
+  <h2 class="font-display font-bold text-2xl md:text-3xl mb-3 text-txt">The language challenge</h2>
+  <p class="text-txt-sub max-w-2xl mx-auto mb-8 leading-relaxed">Pakistan's food reviews are written in a beautiful mix of English, Roman Urdu (Urdu in Latin script, with no fixed spelling), and Urdu Nastaliq script. A single model can't handle all three well — that's why we built a language-aware routing system.</p>
+  <div class="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+    <div class="glass rounded-xl p-5 text-center">
+      <div class="text-sm font-mono font-semibold text-txt mb-2">English</div>
+      <p class="text-sm text-txt-sub italic">"The biryani was amazing, generous portion and fast delivery"</p>
+    </div>
+    <div class="glass rounded-xl p-5 text-center">
+      <div class="text-sm font-mono font-semibold text-txt mb-2">Roman Urdu</div>
+      <p class="text-sm text-txt-sub italic">"bohat acha khana tha bilkul zabardast lekin delivery late hui"</p>
+    </div>
+    <div class="glass rounded-xl p-5 text-center">
+      <div class="text-sm font-mono font-semibold text-txt mb-2 urdu-heading" dir="rtl">اردو</div>
+      <p class="text-sm text-txt-sub urdu-heading" dir="rtl">"کھانا بہت اچھا تھا لیکن ڈلیوری بہت لیٹ ہوئی"</p>
+    </div>
+  </div>
+</section>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6"><div class="pk-divider"><span class="pk-divider-icon">&#10022;</span></div></div>
+
+<!-- ===== AT A GLANCE ===== -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="glass rounded-2xl p-5 sm:p-6"><div class="pk-accent-bar"></div><div class="text-2xl sm:text-3xl font-display font-bold text-txt">{{ "{:,}".format(total_reviews) }}</div><div class="text-sm text-txt-muted mt-1">Reviews processed</div></div>
+    <div class="glass rounded-2xl p-5 sm:p-6"><div class="pk-accent-bar"></div><div class="text-2xl sm:text-3xl font-display font-bold text-txt">{{ total_cities }}</div><div class="text-sm text-txt-muted mt-1">Cities across Pakistan</div></div>
+    <div class="glass rounded-2xl p-5 sm:p-6"><div class="pk-accent-bar"></div><div class="text-2xl sm:text-3xl font-display font-bold text-txt">139,159</div><div class="text-sm text-txt-muted mt-1">Duplicates removed (UUID dedup)</div></div>
+    <div class="glass rounded-2xl p-5 sm:p-6"><div class="pk-accent-bar"></div><div class="text-2xl sm:text-3xl font-display font-bold text-txt">10</div><div class="text-sm text-txt-muted mt-1">Pipeline stages, end to end</div></div>
+  </div>
+</section>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6"><div class="pk-divider"><span class="pk-divider-icon">&#10022;</span></div></div>
+
+<!-- ===== PIPELINE OVERVIEW ===== -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-16 ajrak-bg">
+  <div class="urdu-heading text-accent-gold text-sm mb-2 opacity-70" dir="rtl">پائپ لائن کا جائزہ</div>
+  <h2 class="font-display font-bold text-2xl md:text-3xl mb-2 text-txt">The complete pipeline, step by step</h2>
+  <p class="text-txt-sub mb-10 max-w-2xl">From raw CSVs to interactive dashboards — every stage is measured, benchmarked, and documented. No black boxes.</p>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <!-- Step 1 -->
+    <div class="pipeline-step flex items-start gap-3">
+      <div class="pipeline-dot shrink-0 mt-1">1</div>
+      <div class="glass rounded-xl p-5">
+        <div class="flex flex-wrap items-center gap-2 mb-2">
+          <h3 class="font-display font-semibold text-txt">Data Ingestion & Deduplication</h3>
+          <span class="model-tag">pandas</span>
+        </div>
+        <p class="text-sm text-txt-sub leading-relaxed">Two yearly Foodpanda exports (2025 + 2026) merged on <code class="model-tag">storeid</code>. UUID-based deduplication removed <strong class="text-txt">139,159 duplicate snapshots</strong> — a naive concatenation would have double-counted 9% of the data. Final: 1,552,204 unique reviews, Feb 2024 – Jan 2026.</p>
+      </div>
+    </div>
+    <!-- Step 2 -->
+    <div class="pipeline-step flex items-start gap-3">
+      <div class="pipeline-dot shrink-0 mt-1">2</div>
+      <div class="glass rounded-xl p-5">
+        <div class="flex flex-wrap items-center gap-2 mb-2">
+          <h3 class="font-display font-semibold text-txt">Language Detection</h3>
+          <span class="model-tag">regex</span><span class="model-tag">lexicon</span>
+        </div>
+        <p class="text-sm text-txt-sub leading-relaxed">Each review classified as <strong class="text-txt">English</strong>, <strong class="text-txt">Roman Urdu/Mixed</strong>, or <strong class="text-txt">Urdu Script</strong> using Unicode range detection (U+0600–U+06FF) and a 50+ word Roman Urdu marker lexicon. Language flag determines which model handles the review.</p>
+      </div>
+    </div>
+    <!-- Step 3 -->
+    <div class="pipeline-step flex items-start gap-3">
+      <div class="pipeline-dot shrink-0 mt-1">3</div>
+      <div class="glass rounded-xl p-5">
+        <div class="flex flex-wrap items-center gap-2 mb-2">
+          <h3 class="font-display font-semibold text-txt">Model Benchmarking</h3>
+          <span class="model-tag">XLM-RoBERTa</span><span class="model-tag">TweetEval</span>
+        </div>
+        <p class="text-sm text-txt-sub leading-relaxed">Two transformer models benchmarked on held-out labeled data before any production use. <strong class="text-txt">Khubaib01/roman-urdu-sentiment-xlm-r</strong> achieved 67.9% accuracy on Roman Urdu (vs. 48.8% for the general model). <strong class="text-txt">cardiffnlp/twitter-xlm-roberta-base-sentiment</strong> achieved 68.0% on English TweetEval. A data-driven VADER lexicon baseline was also built for comparison.</p>
+      </div>
+    </div>
+    <!-- Step 4 -->
+    <div class="pipeline-step flex items-start gap-3">
+      <div class="pipeline-dot shrink-0 mt-1">4</div>
+      <div class="glass rounded-xl p-5">
+        <div class="flex flex-wrap items-center gap-2 mb-2">
+          <h3 class="font-display font-semibold text-txt">Dual-Transformer Ensemble Inference</h3>
+          <span class="model-tag">PyTorch</span><span class="model-tag">CUDA fp16</span>
+        </div>
+        <p class="text-sm text-txt-sub leading-relaxed">Both models run on every review with GPU-accelerated batch inference (batch size 128, mixed precision on CUDA). Each review gets two predictions + confidence scores. Checkpointed every 200 batches for crash recovery on Kaggle GPU sessions.</p>
+      </div>
+    </div>
+    <!-- Step 5 -->
+    <div class="pipeline-step flex items-start gap-3">
+      <div class="pipeline-dot shrink-0 mt-1">5</div>
+      <div class="glass rounded-xl p-5">
+        <div class="flex flex-wrap items-center gap-2 mb-2">
+          <h3 class="font-display font-semibold text-txt">Language-Aware Routing</h3>
+          <span class="model-tag">confidence</span><span class="model-tag">agreement</span>
+        </div>
+        <p class="text-sm text-txt-sub leading-relaxed">Roman Urdu/Mixed reviews route to the specialist model; English/Urdu Script to the general model. Reviews where models disagree or confidence drops below 0.60 are flagged for LLM review — creating a transparent "uncertainty queue" rather than silently trusting a single prediction.</p>
+      </div>
+    </div>
+    <!-- Step 6 -->
+    <div class="pipeline-step flex items-start gap-3">
+      <div class="pipeline-dot shrink-0 mt-1">6</div>
+      <div class="glass rounded-xl p-5">
+        <div class="flex flex-wrap items-center gap-2 mb-2">
+          <h3 class="font-display font-semibold text-txt">Keyword-Based Aspect Extraction</h3>
+          <span class="model-tag">multilingual</span>
+        </div>
+        <p class="text-sm text-txt-sub leading-relaxed">Seven aspect categories (taste, quantity, price, delivery, packaging, hygiene, service) detected via a multilingual keyword dictionary covering English and Roman Urdu terms. Text normalization collapses repeated characters (<code class="model-tag">boooht</code> → <code class="model-tag">boht</code>) before matching.</p>
+      </div>
+    </div>
+    <!-- Step 7 -->
+    <div class="pipeline-step flex items-start gap-3">
+      <div class="pipeline-dot shrink-0 mt-1">7</div>
+      <div class="glass rounded-xl p-5">
+        <div class="flex flex-wrap items-center gap-2 mb-2">
+          <h3 class="font-display font-semibold text-txt">Zero-Shot Aspect Discovery</h3>
+          <span class="model-tag">mDeBERTa-v3</span><span class="model-tag">10k sample</span>
+        </div>
+        <p class="text-sm text-txt-sub leading-relaxed">A cross-lingual NLI model (<code class="model-tag">MoritzLaurer/mDeBERTa-v3-base-mnli-xnli</code>) run on 10,000 "blind spot" reviews (those with zero keyword aspects) to discover what the keyword list misses. Surfaced new candidate categories like "wrong item received" and "food arrived cold". Limited to 10k due to student compute constraints.</p>
+      </div>
+    </div>
+    <!-- Step 8 -->
+    <div class="pipeline-step flex items-start gap-3">
+      <div class="pipeline-dot shrink-0 mt-1">8</div>
+      <div class="glass rounded-xl p-5">
+        <div class="flex flex-wrap items-center gap-2 mb-2">
+          <h3 class="font-display font-semibold text-txt">Unsupervised Topic Modeling</h3>
+          <span class="model-tag">BERTopic</span><span class="model-tag">MiniLM-L12</span>
+        </div>
+        <p class="text-sm text-txt-sub leading-relaxed">100,000 reviews embedded with <code class="model-tag">paraphrase-multilingual-MiniLM-L12-v2</code>, then clustered via BERTopic with a custom Roman Urdu stopword list. Discovered organic topic clusters that neither the keyword list nor zero-shot classifier anticipated.</p>
+      </div>
+    </div>
+    <!-- Step 9 -->
+    <div class="pipeline-step flex items-start gap-3">
+      <div class="pipeline-dot shrink-0 mt-1">9</div>
+      <div class="glass rounded-xl p-5">
+        <div class="flex flex-wrap items-center gap-2 mb-2">
+          <h3 class="font-display font-semibold text-txt">SHAP Explainability</h3>
+          <span class="model-tag">SHAP</span><span class="model-tag">word-level</span>
+        </div>
+        <p class="text-sm text-txt-sub leading-relaxed">SHAP (SHapley Additive exPlanations) applied to explain individual predictions — which specific words drove each sentiment label. Used on LLM-queued reviews to understand why the ensemble was uncertain, surfacing patterns like Roman Urdu function words confusing the general model.</p>
+      </div>
+    </div>
+    <!-- Step 10 -->
+    <div class="pipeline-step flex items-start gap-3">
+      <div class="pipeline-dot shrink-0 mt-1">10</div>
+      <div class="glass rounded-xl p-5">
+        <div class="flex flex-wrap items-center gap-2 mb-2">
+          <h3 class="font-display font-semibold text-txt">Aggregation & Web Platform</h3>
+          <span class="model-tag">DuckDB</span><span class="model-tag">Flask</span>
+        </div>
+        <p class="text-sm text-txt-sub leading-relaxed">All results aggregated at city, restaurant, and aspect level. Temporal trends computed monthly. City reliability scores measure model agreement rate by region. Data served via Flask + DuckDB to this interactive web platform with Chart.js visualizations.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-8 text-center">
+    <a href="/methodology" class="inline-flex items-center gap-2 text-brand font-semibold text-sm hover:gap-3 transition-all">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      Read the full methodology with benchmarks & charts
+    </a>
+  </div>
+</section>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6"><div class="pk-divider"><span class="pk-divider-icon">&#10022;</span></div></div>
+
+<!-- ===== TWO AUDIENCES ===== -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+  <h2 class="font-display font-bold text-2xl md:text-3xl mb-2 text-txt">Built for two very different people</h2>
+  <p class="text-txt-sub mb-10 max-w-2xl">Same underlying data, two completely different jobs to do with it.</p>
+  <div class="grid md:grid-cols-2 gap-6">
+    <a href="/user" class="glass glass-hover rounded-3xl p-8 block group">
+      <div class="icon-wrap mb-5" style="background:var(--brand-light)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+      </div>
+      <h3 class="font-display font-bold text-xl mb-2 text-txt">For customers</h3>
+      <p class="text-txt-sub leading-relaxed mb-5">Browse by province and city, see each restaurant's real sentiment mix next to its official star rating, and read exactly what people liked and complained about.</p>
+      <span class="text-brand font-semibold text-sm inline-flex items-center gap-1 group-hover:gap-2 transition-all">Explore the data <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
+    </a>
+    <a href="/owner" class="glass glass-hover rounded-3xl p-8 block group">
+      <div class="icon-wrap gold mb-5" style="background:var(--accent-gold-light)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+      </div>
+      <h3 class="font-display font-bold text-xl mb-2 text-txt">For restaurant owners</h3>
+      <p class="text-txt-sub leading-relaxed mb-5">Skip scrolling through hundreds of comments. See complaint categories ranked by severity, then ask an AI assistant grounded in your actual data what to fix first.</p>
+      <span class="text-accent-gold font-semibold text-sm inline-flex items-center gap-1 group-hover:gap-2 transition-all">Open owner portal <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
+    </a>
+  </div>
+</section>
+
+<!-- ===== MODEL ARCHITECTURE ===== -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+  <div class="urdu-heading text-accent-gold text-sm mb-2 opacity-70" dir="rtl">ماڈل آرکیٹیکچر</div>
+  <h2 class="font-display font-bold text-2xl md:text-3xl mb-2 text-txt">Under the hood: transformer architecture</h2>
+  <p class="text-txt-sub mb-10 max-w-2xl">Two fine-tuned XLM-RoBERTa models, routed by detected language, with disagreement-based uncertainty flagging.</p>
+
+  <div class="grid md:grid-cols-2 gap-5">
+    <div class="glass rounded-2xl p-6">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white text-sm font-bold" style="background:var(--brand)">G</div>
+        <div>
+          <h4 class="font-display font-semibold text-txt">cardiffnlp (General Multilingual)</h4>
+          <p class="text-xs text-txt-muted">XLM-RoBERTa-base · 8 languages · TweetEval fine-tuned</p>
+        </div>
+      </div>
+      <div class="space-y-2 text-sm text-txt-sub">
+        <p><strong class="text-txt">Architecture:</strong> 12-layer transformer, 270M parameters</p>
+        <p><strong class="text-txt">Strength:</strong> English benchmark — 68.0% accuracy on TweetEval sentiment</p>
+        <p><strong class="text-txt">Weakness:</strong> 48.8% on Roman Urdu — function words like "acha", "bohat" confuse it</p>
+        <p><strong class="text-txt">Routing:</strong> Handles English and Urdu Script reviews</p>
+      </div>
+    </div>
+    <div class="glass rounded-2xl p-6">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white text-sm font-bold" style="background:var(--accent-gold)">R</div>
+        <div>
+          <h4 class="font-display font-semibold text-txt">Khubaib01 (Roman Urdu Specialist)</h4>
+          <p class="text-xs text-txt-muted">XLM-RoBERTa · Roman Urdu fine-tuned</p>
+        </div>
+      </div>
+      <div class="space-y-2 text-sm text-txt-sub">
+        <p><strong class="text-txt">Architecture:</strong> XLM-R base, fine-tuned on Roman Urdu sentiment data</p>
+        <p><strong class="text-txt">Strength:</strong> 67.9% accuracy on Roman Urdu benchmark — a +19 point improvement</p>
+        <p><strong class="text-txt">Weakness:</strong> Underperforms on pure English</p>
+        <p><strong class="text-txt">Routing:</strong> Handles Roman Urdu / Mixed-language reviews</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Benchmark teaser -->
+  <div class="mt-8 glass rounded-2xl p-6 md:p-8">
+    <h3 class="font-display font-semibold text-lg mb-4 text-txt">Benchmark results — measured, not claimed</h3>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div class="rounded-xl p-4" style="background:var(--bg-surface2)">
+        <div class="text-xs text-txt-muted mb-1">Khubaib01 on Roman Urdu</div>
+        <div class="text-2xl font-display font-bold text-mint">67.9%</div>
+        <div class="text-xs text-txt-muted">vs. 48.8% for general model</div>
+      </div>
+      <div class="rounded-xl p-4" style="background:var(--bg-surface2)">
+        <div class="text-xs text-txt-muted mb-1">cardiffnlp on English</div>
+        <div class="text-2xl font-display font-bold text-brand">68.0%</div>
+        <div class="text-xs text-txt-muted">TweetEval sentiment benchmark</div>
+      </div>
+      <div class="rounded-xl p-4" style="background:var(--bg-surface2)">
+        <div class="text-xs text-txt-muted mb-1">Model agreement rate</div>
+        <div class="text-2xl font-display font-bold text-txt">~80%</div>
+        <div class="text-xs text-txt-muted">primary vs. secondary predictions</div>
+      </div>
+      <div class="rounded-xl p-4" style="background:var(--bg-surface2)">
+        <div class="text-xs text-txt-muted mb-1">Flagged for LLM review</div>
+        <div class="text-2xl font-display font-bold text-amber">~20%</div>
+        <div class="text-xs text-txt-muted">low-confidence or disagreed reviews</div>
+      </div>
+    </div>
+    <p class="text-xs text-txt-muted">The Roman Urdu benchmark (Sharf, 2018 / UCI Roman Urdu Dataset) is independent of either model's training data. A data-driven VADER lexicon baseline was also built from training data for comparison.</p>
+    <div class="mt-4">
+      <a href="/methodology" class="text-brand font-semibold text-sm inline-flex items-center gap-1 hover:gap-2 transition-all">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Full methodology with all charts & limitations
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6"><div class="pk-divider"><span class="pk-divider-icon">&#10022;</span></div></div>
+
+<!-- ===== CTA: LIVE TESTER ===== -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+  <div class="rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-6" style="background:linear-gradient(135deg, var(--brand-light), var(--accent-gold-light));border:1px solid var(--border-color)">
+    <div>
+      <h2 class="font-display font-bold text-2xl mb-2 text-txt">Try the exact production model on your own sentence</h2>
+      <p class="text-txt-sub">Type any review — English, Roman Urdu, or mixed — and see which model handles it, the confidence score, and whether both models agree.</p>
+    </div>
+    <a href="/tester" class="whitespace-nowrap rounded-full hover:opacity-90 transition px-6 py-3 font-semibold text-white inline-flex items-center gap-2" style="background:var(--accent-gold)">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      Open live tester
+    </a>
+  </div>
+</section>
+
+<!-- ===== AUTHOR ===== -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-20">
+  <!-- Section heading -->
+  <div class="text-center mb-10">
+    <div class="urdu-heading text-accent-gold text-sm mb-1 opacity-70" dir="rtl">مصنف</div>
+    <h2 class="font-display font-bold text-2xl md:text-3xl text-txt">Meet the researcher</h2>
+  </div>
+
+  <div class="glass rounded-3xl overflow-hidden" style="border:1px solid rgba(184,134,11,0.15)">
+    <!-- Decorative calligraphy band at top -->
+    <div class="text-center py-4 px-4" style="background:linear-gradient(90deg, var(--brand-light), var(--accent-gold-light), var(--brand-light));border-bottom:1px solid rgba(184,134,11,0.12)">
+      <div class="arabic-calligraphy text-xl md:text-2xl" style="color:var(--accent-gold);opacity:0.6">بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ</div>
+    </div>
+
+    <div class="p-8 md:p-12">
+      <div class="grid md:grid-cols-5 gap-8 md:gap-10 items-center">
+        <!-- Left column: Avatar + Calligraphy Name -->
+        <div class="md:col-span-2 text-center">
+          <!-- Calligraphic monogram -->
+          <div class="relative inline-block mb-8">
+            <div class="w-40 h-40 md:w-48 md:h-48 rounded-full mx-auto flex items-center justify-center overflow-visible" style="background:linear-gradient(135deg, var(--brand), #0A5632);border:3px solid var(--accent-gold);box-shadow:0 0 0 6px rgba(184,134,11,0.08), 0 8px 32px rgba(0,0,0,0.2)">
+              <span class="urdu-heading text-5xl md:text-6xl font-bold" style="background:linear-gradient(135deg, #E4C05A, #F4E8C8, #D4AF37);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;overflow:visible;display:block" dir="rtl">ث . ع</span>
+            </div>
+            <div class="absolute -top-1 -right-1 w-4 h-4 rounded-full" style="background:var(--accent-gold);opacity:0.6"></div>
+            <div class="absolute -bottom-1 -left-1 w-3 h-3 rounded-full" style="background:var(--brand);opacity:0.5"></div>
+          </div>
+
+          <!-- Name in Urdu Nastaliq calligraphy (gold gradient) -->
+          <h3 class="author-caligraphy-name text-3xl md:text-4xl font-bold mb-1" dir="rtl">ثقلین عباس</h3>
+
+          <!-- Name in English -->
+          <p class="font-display font-bold text-lg text-txt tracking-wide">Saqlain Abbas</p>
+
+          <!-- Ornamental divider -->
+          <div class="author-ornament-line my-4 max-w-xs mx-auto">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="color:var(--accent-gold);opacity:0.7;flex-shrink:0"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01z" fill="currentColor"/></svg>
+          </div>
+
+          <!-- Title -->
+          <p class="text-sm text-txt-sub">Creator & sole developer</p>
+          <p class="arabic-calligraphy text-base mt-1" style="color:var(--accent-gold);opacity:0.7">محقق · ڈیولپر</p>
+
+          <!-- LinkedIn -->
+          <a href="https://linkedin.com/in/saqlainabbas11" target="_blank" rel="noopener" class="inline-flex items-center gap-2 mt-4 text-sm font-medium rounded-full px-5 py-2 hover:opacity-90 transition text-white" style="background:var(--brand)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            LinkedIn Profile
+          </a>
+        </div>
+
+        <!-- Right column: Description + Tech stack -->
+        <div class="md:col-span-3">
+          <!-- Arabic wisdom quote -->
+          <div class="mb-5 p-4 rounded-xl" style="background:var(--accent-gold-light);border:1px solid rgba(184,134,11,0.1)">
+            <p class="arabic-calligraphy text-lg md:text-xl text-center" style="color:var(--accent-gold)">«العلم نور والجهل ظلام»</p>
+            <p class="text-xs text-txt-muted text-center mt-1 italic">"Knowledge is light and ignorance is darkness"</p>
+          </div>
+
+          <!-- Project description -->
+          <p class="text-txt-sub leading-relaxed mb-6">This entire ecosystem — from data collection and cleaning, through dual-transformer ensemble inference, zero-shot aspect discovery, BERTopic clustering, SHAP explainability, to this interactive web platform — was designed, built, and deployed by a single developer as an independent student research project.</p>
+
+          <!-- Urdu description -->
+          <p class="urdu-heading text-sm text-txt-sub leading-loose mb-6" dir="rtl">یہ مکمل نظام — ڈیٹا اکٹھا کرنے سے لے کر دوہرے ٹرانسفارمر ماڈل، صفر شاٹ پہلو دریافت، اور اس انٹرایکٹو ویب پلیٹ فارم تک — ایک آزاد طالب علم تحقیقی منصوبے کے طور پر تنہا تیار کیا گیا۔</p>
+
+          <!-- Tech stack heading -->
+          <p class="text-xs font-semibold text-txt-muted uppercase tracking-wider mb-3">Technology stack</p>
+
+          <!-- Tech tags -->
+          <div class="flex flex-wrap gap-2">
+            <span class="model-tag">PyTorch</span>
+            <span class="model-tag">HuggingFace Transformers</span>
+            <span class="model-tag">XLM-RoBERTa</span>
+            <span class="model-tag">mDeBERTa-v3</span>
+            <span class="model-tag">BERTopic</span>
+            <span class="model-tag">SHAP</span>
+            <span class="model-tag">VADER</span>
+            <span class="model-tag">Kaggle GPU</span>
+            <span class="model-tag">Flask</span>
+            <span class="model-tag">DuckDB</span>
+            <span class="model-tag">Tailwind CSS</span>
+            <span class="model-tag">Chart.js</span>
+          </div>
+
+          <!-- Decorative Arabic footer text -->
+          <div class="mt-6 pt-4" style="border-top:1px solid var(--border-color)">
+            <div class="flex items-center justify-between">
+              <p class="arabic-calligraphy text-base" style="color:var(--accent-gold);opacity:0.5">وَمَا تَوْفِيقِي إِلَّا بِٱللَّهِ</p>
+              <p class="text-xs text-txt-muted italic">"My success is only through Allah"</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom decorative calligraphy band -->
+    <div class="text-center py-3" style="background:linear-gradient(90deg, var(--brand-light), var(--accent-gold-light), var(--brand-light));border-top:1px solid rgba(184,134,11,0.12)">
+      <div class="arabic-calligraphy text-sm" style="color:var(--accent-gold);opacity:0.35">✦ ۝ ✦</div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+{% block title %}Live Sentiment Tester — Try the Production Pipeline{% endblock %}
+
+{% block content %}
+<!-- ===== HERO ===== -->
+<section class="relative overflow-hidden border-b" style="border-color:var(--border-color)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+    <div class="max-w-3xl">
+      <div class="urdu-heading text-accent-gold text-sm mb-2 opacity-70" dir="rtl">جذبے کی پیمائش</div>
+      <h1 class="font-display font-bold text-3xl md:text-4xl lg:text-5xl mb-4 text-txt leading-tight">
+        Try the exact <span class="grad-text">production model.</span>
+      </h1>
+      <p class="text-txt-sub text-base md:text-lg max-w-2xl leading-relaxed">
+        Type a review in English, Roman Urdu, Urdu script, or mixed language. This calls the same dual-transformer ensemble that scored all <strong class="text-txt">1,552,204 reviews</strong> in the dataset — no mock API, no simplified version.
+      </p>
+      <div class="flex flex-wrap gap-2 mt-5">
+        <span class="stat-pill">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          2 transformer models
+        </span>
+        <span class="stat-pill">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+          3 language routes
+        </span>
+        <span class="stat-pill">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          Confidence-based routing
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MAIN TESTER ===== -->
+<section class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+  <div class="grid lg:grid-cols-3 gap-6">
+    <!-- LEFT: Input area (2 cols) -->
+    <div class="lg:col-span-2">
+      <div class="glass rounded-3xl p-5 sm:p-8">
+        <div class="flex items-center gap-2 mb-5">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:var(--brand-light)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </div>
+          <h2 class="font-display font-semibold text-base text-txt">Write a review</h2>
+        </div>
+
+        <textarea id="tester-input" rows="5" placeholder="e.g. bohat acha khana tha lekin delivery bht late hui..."
+                  class="w-full rounded-xl px-4 py-3.5 text-sm resize-none mb-4"></textarea>
+
+        <!-- Example buttons -->
+        <div class="mb-5">
+          <div class="text-[11px] text-txt-muted uppercase tracking-wide mb-2">Try an example:</div>
+          <div class="flex flex-wrap gap-2">
+            <button onclick="setExample('good food but delivery was very late')" class="text-xs glass glass-hover rounded-full px-3 py-1.5 inline-flex items-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+              English
+            </button>
+            <button onclick="setExample('bohat acha khana tha bilkul zabardast')" class="text-xs glass glass-hover rounded-full px-3 py-1.5 inline-flex items-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+              Roman Urdu
+            </button>
+            <button onclick="setExample('quantity kam thi lekin taste acha tha')" class="text-xs glass glass-hover rounded-full px-3 py-1.5 inline-flex items-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 18l6-6-6-6"/><path d="M8 6l-6 6 6 6"/></svg>
+              Mixed
+            </button>
+            <button onclick="setExample('کھانا بہت مزیدار تھا لیکن رائیڈر نے دیر لگائی')" class="text-xs glass glass-hover rounded-full px-3 py-1.5 inline-flex items-center gap-1.5" dir="rtl">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>
+              Urdu script
+            </button>
+            <button onclick="setExample('worst experience ever food was cold and rider was rude')" class="text-xs glass glass-hover rounded-full px-3 py-1.5 inline-flex items-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+              Negative
+            </button>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <p class="text-[11px] text-txt-muted hidden sm:block">
+            <kbd class="glass rounded px-1.5 py-0.5 text-[10px]">Ctrl</kbd> + <kbd class="glass rounded px-1.5 py-0.5 text-[10px]">Enter</kbd> to analyze
+          </p>
+          <button id="analyze-btn" onclick="analyzeSentiment()" class="rounded-full hover:opacity-90 transition px-7 py-3 font-semibold text-sm text-white shadow-glow inline-flex items-center gap-2" style="background:var(--brand)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Analyze sentiment
+          </button>
+        </div>
+      </div>
+
+      <!-- Error box -->
+      <div id="tester-error" class="hidden mt-4 rounded-2xl p-4 text-sm text-negative glass" style="background:rgba(220,38,38,.06)"></div>
+
+      <!-- Results -->
+      <div id="tester-result" class="hidden mt-8 space-y-6">
+        <!-- Main prediction card -->
+        <div class="glass rounded-3xl p-6 sm:p-8">
+          <div class="text-center mb-6">
+            <div class="text-[11px] text-txt-muted uppercase tracking-wide mb-3 flex items-center justify-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              Final prediction — language-aware routing
+            </div>
+            <div id="final-sentiment" class="text-4xl sm:text-5xl font-display font-bold mb-2"></div>
+            <div id="final-confidence" class="text-txt-sub text-sm"></div>
+          </div>
+
+          <!-- Routing info pills -->
+          <div class="flex flex-wrap items-center justify-center gap-3 mt-4">
+            <span id="detected-lang" class="inline-flex items-center gap-1.5 glass rounded-full px-3 py-1.5 text-xs text-txt-sub">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </span>
+            <span id="primary-model" class="inline-flex items-center gap-1.5 glass rounded-full px-3 py-1.5 text-xs text-txt-sub">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </span>
+          </div>
+        </div>
+
+        <!-- Dual model breakdown -->
+        <div class="grid md:grid-cols-2 gap-5">
+          <div class="glass rounded-2xl p-6">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="w-6 h-6 rounded-md flex items-center justify-center flex-shrink-0" style="background:var(--brand-light)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              </div>
+              <h4 class="font-semibold text-sm text-txt">cardiffnlp (general)</h4>
+            </div>
+            <p class="text-[11px] text-txt-muted mb-4 ml-8">XLM-RoBERTa fine-tuned on 8 languages — 68.0% accuracy on English TweetEval benchmark.</p>
+            <div id="general-breakdown"></div>
+          </div>
+          <div class="glass rounded-2xl p-6">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="w-6 h-6 rounded-md flex items-center justify-center flex-shrink-0" style="background:var(--accent-gold-light)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" stroke-width="2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+              </div>
+              <h4 class="font-semibold text-sm text-txt">Khubaib01 (Roman Urdu)</h4>
+            </div>
+            <p class="text-[11px] text-txt-muted mb-4 ml-8">XLM-RoBERTa fine-tuned for Roman Urdu — 67.9% accuracy vs. 48.8% for general model on that benchmark.</p>
+            <div id="ru-breakdown"></div>
+          </div>
+        </div>
+
+        <!-- Agreement note -->
+        <div id="agreement-note" class="text-center text-sm glass rounded-2xl p-4"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Sidebar (1 col) -->
+    <div class="space-y-5">
+      <!-- How routing works -->
+      <div class="glass rounded-2xl p-5">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-7 h-7 rounded-lg flex items-center justify-center" style="background:var(--brand-light)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h3 class="font-display font-semibold text-sm text-txt">How routing works</h3>
+        </div>
+        <div class="space-y-3">
+          <div class="flex gap-3">
+            <div class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white mt-0.5" style="background:var(--brand)">1</div>
+            <p class="text-xs text-txt-sub leading-relaxed">Language detection classifies your review as <strong class="text-txt">English</strong>, <strong class="text-txt">Roman Urdu</strong>, or <strong class="text-txt">Urdu Script</strong></p>
+          </div>
+          <div class="flex gap-3">
+            <div class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white mt-0.5" style="background:var(--brand)">2</div>
+            <p class="text-xs text-txt-sub leading-relaxed">Both models run on your review — producing two independent predictions and confidence scores</p>
+          </div>
+          <div class="flex gap-3">
+            <div class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white mt-0.5" style="background:var(--brand)">3</div>
+            <p class="text-xs text-txt-sub leading-relaxed">Language flag determines routing: Roman Urdu goes to the specialist, others to the general model</p>
+          </div>
+          <div class="flex gap-3">
+            <div class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white mt-0.5" style="background:var(--brand)">4</div>
+            <p class="text-xs text-txt-sub leading-relaxed">If models disagree or confidence &lt; 0.60, the review would be flagged for LLM review in the full pipeline</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Model cards -->
+      <div class="glass rounded-2xl p-5">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-7 h-7 rounded-lg flex items-center justify-center" style="background:var(--accent-gold-light)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3 class="font-display font-semibold text-sm text-txt">Models in production</h3>
+        </div>
+        <div class="space-y-3">
+          <div class="rounded-xl p-3" style="background:var(--bg-surface2)">
+            <div class="font-mono text-[11px] text-txt mb-1">cardiffnlp/twitter-xlm-roberta-base-sentiment</div>
+            <div class="flex flex-wrap gap-1.5 mt-2">
+              <span class="model-tag">XLM-RoBERTa</span>
+              <span class="model-tag">multilingual</span>
+              <span class="model-tag">68.0% acc</span>
+            </div>
+          </div>
+          <div class="rounded-xl p-3" style="background:var(--bg-surface2)">
+            <div class="font-mono text-[11px] text-txt mb-1">Khubaib01/roman-urdu-sentiment-xlm-r</div>
+            <div class="flex flex-wrap gap-1.5 mt-2">
+              <span class="model-tag">XLM-RoBERTa</span>
+              <span class="model-tag">Roman Urdu</span>
+              <span class="model-tag">67.9% acc</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pipeline stats -->
+      <div class="glass rounded-2xl p-5">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-7 h-7 rounded-lg flex items-center justify-center" style="background:rgba(13,155,110,0.08)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--mint)" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-4"/></svg>
+          </div>
+          <h3 class="font-display font-semibold text-sm text-txt">Pipeline scale</h3>
+        </div>
+        <div class="space-y-2.5">
+          <div class="flex justify-between text-xs">
+            <span class="text-txt-muted">Reviews processed</span>
+            <span class="text-txt font-medium">1,552,204</span>
+          </div>
+          <div class="flex justify-between text-xs">
+            <span class="text-txt-muted">Cities covered</span>
+            <span class="text-txt font-medium">27</span>
+          </div>
+          <div class="flex justify-between text-xs">
+            <span class="text-txt-muted">Duplicates removed</span>
+            <span class="text-txt font-medium">139,159</span>
+          </div>
+          <div class="flex justify-between text-xs">
+            <span class="text-txt-muted">Confidence threshold</span>
+            <span class="text-txt font-medium">0.60</span>
+          </div>
+          <div class="flex justify-between text-xs">
+            <span class="text-txt-muted">Batch size (CUDA fp16)</span>
+            <span class="text-txt font-medium">128</span>
+          </div>
+        </div>
+        <a href="/methodology" class="mt-4 text-xs text-brand hover:underline inline-flex items-center gap-1">
+          Full methodology documentation
+          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/sentiment_ui.js') }}"></script>
+<script src="{{ url_for('static', filename='js/tester.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,28 @@
+city,review_count,agreement_rate,avg_confidence
+Karachi,464427,84.7,0.756
+Lahore,446482,85.3,0.755
+Islamabad,108263,86.0,0.757
+Rawalpindi,99866,86.1,0.757
+Faisalabad,65645,84.7,0.751
+Multan,57074,84.8,0.746
+Hyderabad,57019,83.3,0.745
+Sialkot,42739,84.9,0.754
+Sargodha,27349,84.3,0.746
+Bahawalpur,27171,84.4,0.746
+Gujranwala,26336,85.5,0.754
+Peshawar,23744,85.3,0.741
+Abbottabad,17887,85.5,0.745
+Gujrat,14553,84.9,0.753
+Sahiwal,14360,84.5,0.746
+Wah Cantt,12965,85.3,0.742
+Rahim Yar Khan,10580,83.9,0.736
+Quetta,9588,84.3,0.75
+Jhelum,8338,85.4,0.747
+Sukkur,5646,83.2,0.746
+Sheikhupura,2370,85.4,0.743
+Dera Ghazi Khan,2253,85.7,0.729
+Larkana,2178,86.4,0.731
+Okara,2068,86.5,0.731
+Sadiqabad,2008,84.8,0.748
+Mardan,1227,86.6,0.738
+Murree,68,89.7,0.782

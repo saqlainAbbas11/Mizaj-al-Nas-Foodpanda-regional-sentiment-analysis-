@@ -1,0 +1,153 @@
+<svg viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice">
+  <defs>
+    <linearGradient id="isbSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0A1628"/>
+      <stop offset="20%" stop-color="#16213E"/>
+      <stop offset="45%" stop-color="#3D5A80"/>
+      <stop offset="70%" stop-color="#6A9CC0"/>
+      <stop offset="100%" stop-color="#B8D8E8"/>
+    </linearGradient>
+    <linearGradient id="isbGround" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#22314F"/>
+      <stop offset="100%" stop-color="#161E30"/>
+    </linearGradient>
+    <linearGradient id="isbHillFar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2E4562"/>
+      <stop offset="100%" stop-color="#1E3348"/>
+    </linearGradient>
+    <linearGradient id="isbHillNear" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#23364E"/>
+      <stop offset="100%" stop-color="#1A2840"/>
+    </linearGradient>
+    <linearGradient id="isbTent" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F8F9FA"/>
+      <stop offset="100%" stop-color="#DDE1E8"/>
+    </linearGradient>
+    <linearGradient id="isbMinaret" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#E8EAEE"/>
+      <stop offset="100%" stop-color="#D0D4DA"/>
+    </linearGradient>
+    <pattern id="geoPattern" width="60" height="60" patternUnits="userSpaceOnUse">
+      <rect width="60" height="60" fill="#0F1C35"/>
+      <path d="M0,30 L30,0 L60,30 L30,60 Z" fill="none" stroke="#5B8FB0" stroke-width="2"/>
+      <path d="M15,15 L45,15 L45,45 L15,45 Z" fill="none" stroke="#3A6A8A" stroke-width="1"/>
+      <circle cx="30" cy="30" r="6" fill="#7FB5C9"/>
+      <circle cx="30" cy="30" r="2.5" fill="#5B8FB0"/>
+      <circle cx="0" cy="0" r="3" fill="#5B8FB0" opacity="0.5"/>
+      <circle cx="60" cy="0" r="3" fill="#5B8FB0" opacity="0.5"/>
+      <circle cx="0" cy="60" r="3" fill="#5B8FB0" opacity="0.5"/>
+      <circle cx="60" cy="60" r="3" fill="#5B8FB0" opacity="0.5"/>
+    </pattern>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="1200" height="300" fill="url(#isbSky)"/>
+
+  <!-- Stars (dawn sky — faint) -->
+  <g fill="white">
+    <circle cx="100" cy="18" r="1" opacity="0.7"/><circle cx="240" cy="30" r="0.8" opacity="0.5"/>
+    <circle cx="380" cy="12" r="1.1" opacity="0.6"/><circle cx="520" cy="28" r="0.7" opacity="0.4"/>
+    <circle cx="680" cy="15" r="0.9" opacity="0.6"/><circle cx="820" cy="35" r="0.6" opacity="0.4"/>
+    <circle cx="960" cy="20" r="1" opacity="0.5"/><circle cx="1100" cy="38" r="0.7" opacity="0.3"/>
+    <circle cx="170" cy="50" r="0.5" opacity="0.3"/><circle cx="450" cy="55" r="0.5" opacity="0.2"/>
+    <circle cx="750" cy="48" r="0.5" opacity="0.2"/>
+  </g>
+
+  <!-- Dawn glow on horizon -->
+  <ellipse cx="600" cy="270" rx="500" ry="60" fill="#B8D8E8" opacity="0.08"/>
+
+  <!-- Margalla Hills — far range -->
+  <path d="M0,275 L80,210 L160,245 L260,185 L380,235 L500,175 L620,240 L740,185 L860,225 L980,178 L1100,230 L1200,195 L1200,300 L0,300 Z" fill="url(#isbHillFar)" opacity="0.85"/>
+  <!-- Margalla Hills — near range -->
+  <path d="M0,295 L100,245 L200,270 L320,225 L450,265 L580,220 L700,258 L830,218 L950,255 L1080,215 L1200,260 L1200,300 L0,300 Z" fill="url(#isbHillNear)" opacity="0.92"/>
+
+  <!-- Tree silhouettes on hills -->
+  <g fill="#1A2E42" opacity="0.7">
+    <!-- far trees -->
+    <ellipse cx="120" cy="240" rx="10" ry="18"/><ellipse cx="145" cy="235" rx="8" ry="14"/>
+    <ellipse cx="280" cy="218" rx="9" ry="16"/><ellipse cx="305" cy="222" rx="7" ry="12"/>
+    <ellipse cx="410" cy="248" rx="8" ry="14"/><ellipse cx="520" cy="210" rx="10" ry="16"/>
+    <ellipse cx="545" cy="215" rx="7" ry="12"/><ellipse cx="660" cy="250" rx="9" ry="15"/>
+    <ellipse cx="770" cy="222" rx="10" ry="16"/><ellipse cx="795" cy="228" rx="7" ry="12"/>
+    <ellipse cx="890" cy="240" rx="8" ry="14"/><ellipse cx="1010" cy="218" rx="10" ry="16"/>
+    <ellipse cx="1035" cy="224" rx="7" ry="12"/>
+    <!-- near trees -->
+    <ellipse cx="60" cy="278" rx="12" ry="20"/><ellipse cx="90" cy="280" rx="9" ry="16"/>
+    <ellipse cx="170" cy="265" rx="10" ry="18"/><ellipse cx="250" cy="258" rx="11" ry="20"/>
+    <ellipse cx="350" cy="252" rx="9" ry="16"/><ellipse cx="480" cy="260" rx="12" ry="18"/>
+    <ellipse cx="620" cy="248" rx="10" ry="16"/><ellipse cx="750" cy="252" rx="11" ry="18"/>
+    <ellipse cx="870" cy="248" rx="9" ry="14"/><ellipse cx="990" cy="244" rx="12" ry="20"/>
+    <ellipse cx="1120" cy="252" rx="10" ry="18"/>
+  </g>
+
+  <!-- Ground -->
+  <rect y="270" width="1200" height="90" fill="url(#isbGround)"/>
+
+  <!-- Faisal Mosque -->
+  <g transform="translate(600,332)">
+    <!-- courtyard platform -->
+    <polygon points="-280,0 280,0 240,-14 -240,-14" fill="#1A2840"/>
+    <polygon points="-240,-14 240,-14 220,-26 -220,-26" fill="#1E2E4A"/>
+    <rect x="-220" y="-34" width="440" height="8" fill="#253A56"/>
+
+    <!-- 4 minarets (tall, slender, pencil-shaped — unique to Faisal Mosque) -->
+    <g fill="url(#isbMinaret)">
+      <!-- far left minaret (tallest) -->
+      <rect x="-248" y="-240" width="14" height="200" rx="2"/>
+      <polygon points="-248,-240 -234,-240 -241,-268"/>
+      <circle cx="-241" cy="-270" r="3" fill="#E4C05A"/>
+      <rect x="-250" y="-244" width="18" height="5" fill="#D0D4DA"/>
+      <!-- inner left minaret -->
+      <rect x="-170" y="-205" width="12" height="165" rx="2"/>
+      <polygon points="-170,-205 -158,-205 -164,-228"/>
+      <circle cx="-164" cy="-230" r="2.5" fill="#E4C05A"/>
+      <rect x="-172" y="-209" width="16" height="5" fill="#D0D4DA"/>
+      <!-- inner right minaret -->
+      <rect x="158" y="-205" width="12" height="165" rx="2"/>
+      <polygon points="158,-205 170,-205 164,-228"/>
+      <circle cx="164" cy="-230" r="2.5" fill="#E4C05A"/>
+      <rect x="156" y="-209" width="16" height="5" fill="#D0D4DA"/>
+      <!-- far right minaret (tallest) -->
+      <rect x="234" y="-240" width="14" height="200" rx="2"/>
+      <polygon points="234,-240 248,-240 241,-268"/>
+      <circle cx="241" cy="-270" r="3" fill="#E4C05A"/>
+      <rect x="232" y="-244" width="18" height="5" fill="#D0D4DA"/>
+    </g>
+
+    <!-- main tent-shaped prayer hall (iconic triangular form) -->
+    <polygon points="-155,-34 155,-34 100,-185 -100,-185" fill="url(#isbTent)"/>
+    <!-- upper tent peak -->
+    <polygon points="-100,-185 100,-185 0,-258" fill="#C8CCD4"/>
+    <!-- tent structural lines -->
+    <g stroke="#B0B6C2" stroke-width="1.5" opacity="0.5">
+      <line x1="0" y1="-258" x2="0" y2="-34"/>
+      <line x1="0" y1="-258" x2="-155" y2="-34"/>
+      <line x1="0" y1="-258" x2="155" y2="-34"/>
+      <line x1="0" y1="-258" x2="-80" y2="-34"/>
+      <line x1="0" y1="-258" x2="80" y2="-34"/>
+    </g>
+    <!-- horizontal bands -->
+    <g stroke="#B0B6C2" stroke-width="1" opacity="0.3">
+      <line x1="-128" y1="-110" x2="128" y2="-110"/>
+      <line x1="-65" y1="-170" x2="65" y2="-170"/>
+    </g>
+    <!-- shadow at base of tent -->
+    <rect x="-155" y="-40" width="310" height="6" fill="#1E2E4A" opacity="0.3"/>
+
+    <!-- entrance arch detail -->
+    <path d="M-25,-34 L-25,-65 A25,25 0 0 1 25,-65 L25,-34 Z" fill="#253A56" opacity="0.4"/>
+  </g>
+
+  <!-- Foreground road/path hint -->
+  <rect x="0" y="340" width="1200" height="3" fill="#3A4A6A" opacity="0.3"/>
+
+  <!-- Lamp posts -->
+  <g stroke="#5A6A8A" stroke-width="2" opacity="0.4">
+    <line x1="320" y1="300" x2="320" y2="335"/><circle cx="320" cy="298" r="4" fill="#FFD680" opacity="0.5"/>
+    <line x1="880" y1="300" x2="880" y2="335"/><circle cx="880" cy="298" r="4" fill="#FFD680" opacity="0.5"/>
+  </g>
+
+  <!-- Geometric pattern strip -->
+  <rect y="360" width="1200" height="40" fill="url(#geoPattern)"/>
+  <rect y="358" width="1200" height="3" fill="#7FB5C9"/>
+</svg>

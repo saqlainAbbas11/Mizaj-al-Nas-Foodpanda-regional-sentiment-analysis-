@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+{% block title %}Owner Dashboard{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-12">
+  <!-- Back + Pipeline badge -->
+  <div class="flex flex-wrap items-center gap-3 mb-8">
+    <a href="/owner" class="inline-flex items-center gap-1.5 text-sm text-txt-muted hover:text-txt transition">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      Search a different restaurant
+    </a>
+    <span class="hidden sm:inline-flex items-center gap-1.5 text-xs text-txt-muted glass rounded-full px-3 py-1">
+      <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      Analyzed by dual-transformer ensemble pipeline
+    </span>
+  </div>
+
+  <!-- Loading state -->
+  <div id="dash-loading" class="mt-4">
+    <div class="skeleton h-10 w-2/3 rounded-xl mb-3"></div>
+    <div class="skeleton h-5 w-1/3 rounded-xl mb-8"></div>
+    <div class="grid lg:grid-cols-5 gap-6">
+      <div class="lg:col-span-2 space-y-6">
+        <div class="skeleton h-56 rounded-2xl"></div>
+        <div class="skeleton h-64 rounded-2xl"></div>
+      </div>
+      <div class="lg:col-span-3">
+        <div class="skeleton h-[500px] rounded-3xl"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard content (hidden until loaded) -->
+  <div id="dash-content" class="hidden">
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 id="dash-resto-name" class="font-display font-bold text-2xl sm:text-3xl md:text-4xl mb-2 text-txt"></h1>
+      <p id="dash-resto-sub" class="text-txt-sub"></p>
+    </div>
+
+    <!-- KPI strip -->
+    <div id="dash-kpi-strip" class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+      <!-- Populated by JS -->
+    </div>
+
+    <div class="grid lg:grid-cols-5 gap-6">
+      <!-- LEFT COLUMN: Sentiment + Aspects -->
+      <div class="lg:col-span-2 space-y-6">
+        <!-- Sentiment doughnut -->
+        <div class="glass rounded-2xl p-6">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:var(--brand-light)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+            </div>
+            <h3 class="font-display font-semibold text-base text-txt">Sentiment mix</h3>
+          </div>
+          <div class="h-48"><canvas id="dash-sentiment-chart"></canvas></div>
+          <p class="text-[11px] text-txt-muted mt-3 leading-relaxed">Each review is scored by two independent transformer models. The final label uses language-aware routing with a 0.60 confidence threshold.</p>
+        </div>
+
+        <!-- Aspect breakdown -->
+        <div class="glass rounded-2xl p-6">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:var(--accent-gold-light)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-4"/></svg>
+              </div>
+              <h3 class="font-display font-semibold text-base text-txt">Complaint breakdown</h3>
+            </div>
+            <span class="text-[10px] text-txt-muted glass rounded-full px-2 py-0.5">Ranked by severity</span>
+          </div>
+          <div id="dash-aspects" class="space-y-4"></div>
+          <div class="mt-4 pt-4 border-t text-[11px] text-txt-muted leading-relaxed" style="border-color:var(--border-color)">
+            Aspects are extracted using multilingual keyword dictionaries covering both English and Roman Urdu terms. ~55% of reviews match at least one aspect category.
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: AI Assistant -->
+      <div class="lg:col-span-3">
+        <div class="glass rounded-3xl p-5 sm:p-6 flex flex-col" style="height:700px">
+          <!-- Chat header -->
+          <div class="flex items-center gap-3 mb-4 pb-4 border-b" style="border-color:var(--border-color)">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:linear-gradient(135deg,var(--brand),var(--accent-gold))">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="font-display font-semibold text-txt">AI Review Assistant</h3>
+              <p class="text-xs text-txt-muted">Grounded in your real review data — not a generic chatbot</p>
+            </div>
+            <div class="flex items-center gap-1.5 text-xs text-positive">
+              <span class="w-1.5 h-1.5 rounded-full bg-positive animate-pulse"></span>
+              Online
+            </div>
+          </div>
+
+          <!-- Chat messages -->
+          <div id="chat-messages" class="flex-1 overflow-y-auto space-y-3 pr-1 mb-4">
+            <div class="chat-bubble-assistant rounded-2xl rounded-tl-sm px-4 py-3 text-sm max-w-[85%]">
+              <div class="flex items-start gap-2">
+                <div class="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style="background:var(--brand-light)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </div>
+                <div>
+                  <p class="mb-2">Hi! I've analyzed your restaurant's reviews using our dual-transformer pipeline. I can help you understand:</p>
+                  <ul class="text-xs space-y-1 text-txt-muted">
+                    <li>&#8226; Your biggest complaint categories and how to address them</li>
+                    <li>&#8226; What customers actually love about your food</li>
+                    <li>&#8226; Specific, actionable improvement priorities</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="chat-error" class="hidden text-xs text-negative mb-2 glass rounded-xl p-3" style="background:rgba(220,38,38,.06)"></div>
+
+          <!-- Quick actions -->
+          <div class="flex flex-wrap gap-2 mb-3">
+            <button onclick="askQuick('What is my biggest complaint?')" class="text-xs glass glass-hover rounded-full px-3 py-1.5 inline-flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Biggest complaint?
+            </button>
+            <button onclick="askQuick('What are customers happy about?')" class="text-xs glass glass-hover rounded-full px-3 py-1.5 inline-flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+              What's working?
+            </button>
+            <button onclick="askQuick('What should I improve first?')" class="text-xs glass glass-hover rounded-full px-3 py-1.5 inline-flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+              What to fix first?
+            </button>
+            <button onclick="askQuick('How does my delivery compare to taste?')" class="text-xs glass glass-hover rounded-full px-3 py-1.5 inline-flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+              Delivery vs taste?
+            </button>
+          </div>
+
+          <!-- Input -->
+          <div class="flex gap-2">
+            <input id="chat-input" type="text" placeholder="Ask about your reviews..."
+                   class="flex-1 rounded-xl px-4 py-3 text-sm" onkeydown="if(event.key==='Enter') sendChatMessage()">
+            <button id="chat-send-btn" onclick="sendChatMessage()"
+                    class="rounded-xl hover:opacity-90 transition px-5 py-3 text-sm font-semibold text-white inline-flex items-center gap-1.5" style="background:var(--brand)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              Send
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data transparency section -->
+    <div class="mt-12 glass rounded-2xl p-6">
+      <div class="flex items-center gap-2 mb-4">
+        <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:var(--brand-light)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3 class="font-display font-semibold text-base text-txt">How this data was generated</h3>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+        <div class="rounded-xl p-4" style="background:var(--bg-surface2)">
+          <div class="font-semibold text-xs text-txt mb-2 flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            Dual-model scoring
+          </div>
+          <p class="text-xs text-txt-muted leading-relaxed">cardiffnlp/twitter-xlm-roberta + Khubaib01/roman-urdu-sentiment-xlm-r</p>
+        </div>
+        <div class="rounded-xl p-4" style="background:var(--bg-surface2)">
+          <div class="font-semibold text-xs text-txt mb-2 flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Confidence routing
+          </div>
+          <p class="text-xs text-txt-muted leading-relaxed">Reviews with confidence below 0.60 or model disagreement are flagged for deeper review</p>
+        </div>
+        <div class="rounded-xl p-4" style="background:var(--bg-surface2)">
+          <div class="font-semibold text-xs text-txt mb-2 flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Real-time inference
+          </div>
+          <p class="text-xs text-txt-muted leading-relaxed">Same production pipeline that scored all 1,552,204 reviews across 27 cities</p>
+        </div>
+        <div class="rounded-xl p-4" style="background:var(--bg-surface2)">
+          <div class="font-semibold text-xs text-txt mb-2 flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            Full methodology
+          </div>
+          <p class="text-xs text-txt-muted leading-relaxed">See the <a href="/methodology" class="text-brand hover:underline">complete 10-stage pipeline documentation</a> for all technical details</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/sentiment_ui.js') }}"></script>
+<script>
+  const STOREID = "{{ storeid }}";
+</script>
+<script src="{{ url_for('static', filename='js/owner_dashboard.js') }}"></script>
+{% endblock %}

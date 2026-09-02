@@ -1,0 +1,14 @@
+label,is_new_category,hits_in_sample,pct_of_blind_spot_sample
+taste,False,5397,54.0
+service,False,5365,53.6
+hygiene,False,2630,26.3
+wrong item received,True,2609,26.1
+packaging,False,2565,25.7
+quantity,False,2338,23.4
+food authenticity or ingredient quality,True,2055,20.5
+app or ordering technical issue,True,1945,19.4
+food arrived cold,True,1795,17.9
+refund or payment issue,True,1793,17.9
+price,False,1689,16.9
+restaurant closed or unavailable,True,891,8.9
+delivery_rider,False,75,0.8

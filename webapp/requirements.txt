@@ -1,0 +1,18 @@
+# Core web app — validated together in a clean venv, zero pip conflicts (pip check passes)
+flask==3.1.3
+pandas==2.2.3
+duckdb==1.5.5
+python-dotenv==1.0.1
+gunicorn==23.0.0
+
+# Live sentiment tester (only needed if SENTIMENT_MODE=local — see .env.example)
+# transformers pinned to a known-stable 4.x line deliberately, NOT the new 5.x major version,
+# to avoid introducing a second unfamiliar dependency surface on top of everything else here
+transformers==4.46.3
+tokenizers>=0.20,<0.21
+sentencepiece==0.2.2
+# torch is intentionally NOT pinned here — install it separately with the CPU-only index so you
+# don't accidentally pull a multi-GB CUDA build on a machine with no GPU. See README "Setup" step 3.
+
+# Owner AI assistant
+groq==1.7.0

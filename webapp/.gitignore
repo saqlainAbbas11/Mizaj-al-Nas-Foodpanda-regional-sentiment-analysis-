@@ -1,0 +1,41 @@
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# Secrets — NEVER commit keys or tokens
+.env
+
+# Real data — never commit the actual review dataset or built database
+# Small CSVs ARE committed (source data for hosting build).
+# These two are too large for GitHub's 100MB file limit:
+data/raw/processed_reviews.csv
+data/raw/llm_review_queue.csv
+# Built artifacts stay gitignored — rebuilt fresh each deploy:
+data/processed/*.duckdb
+data/processed/static/*.json
+
+# IDE / editor
+.idea/
+.vscode/
+.vs/
+*.swp
+
+# Jupyter
+.ipynb_checkpoints/
+# Notebook contains API keys in cell outputs — clear all outputs before committing,
+# or keep it out of git entirely:
+*.ipynb
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

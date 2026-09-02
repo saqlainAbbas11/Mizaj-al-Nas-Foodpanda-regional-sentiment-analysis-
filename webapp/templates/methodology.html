@@ -1,0 +1,282 @@
+{% extends "base.html" %}
+{% block title %}Methodology — Full Pipeline Documentation{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-4 sm:px-6 py-16">
+  <div class="urdu-heading text-accent-gold text-sm mb-2 opacity-70" dir="rtl">مکمل طریقہ کار</div>
+  <h1 class="font-display font-bold text-3xl md:text-5xl mb-4 text-txt">How this was actually built</h1>
+  <p class="text-txt-sub text-lg max-w-2xl mb-4">Every number on this page is measured, not claimed. This page documents the complete 10-stage pipeline so nothing has to be taken on trust.</p>
+  <div class="inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs text-txt-muted mb-10">
+    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+    {{ disclaimer }}
+  </div>
+
+  <!-- 1. DATA -->
+  <section class="mb-16">
+    <div class="flex items-center gap-3 mb-5">
+      <span class="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold text-white" style="background:var(--brand)">1</span>
+      <h2 class="font-display font-bold text-2xl text-txt">Data Ingestion & Deduplication</h2>
+    </div>
+    <div class="glass rounded-2xl p-6 leading-relaxed text-txt-sub">
+      <p class="mb-3">Two yearly Foodpanda Pakistan exports (2025 and 2026) were merged on <code class="model-tag">storeid</code>. The reviews table was deduplicated by <code class="model-tag">uuid</code> — the two exports overlapped by <strong class="text-txt">139,159 reviews</strong>, so a naive concatenation would have double-counted 9% of the data. After dedup: <strong class="text-txt">1,552,204 unique reviews</strong> across <strong class="text-txt">27 cities</strong> and thousands of restaurants, spanning Feb 2024 to Jan 2026.</p>
+      <p class="mb-3">Restaurant metadata (name, city, food type) was similarly merged by <code class="model-tag">storeid</code>, keeping the most-reviewed entry when duplicates existed. City names were normalized to title case.</p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        <span class="model-tag">pandas</span><span class="model-tag">UUID dedup</span><span class="model-tag">left merge</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. LANGUAGE DETECTION -->
+  <section class="mb-16">
+    <div class="flex items-center gap-3 mb-5">
+      <span class="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold text-white" style="background:var(--brand)">2</span>
+      <h2 class="font-display font-bold text-2xl text-txt">Language Detection</h2>
+    </div>
+    <div class="glass rounded-2xl p-6 leading-relaxed text-txt-sub">
+      <p class="mb-3">Every review is classified into one of three language groups before model routing:</p>
+      <ul class="space-y-2 mb-4">
+        <li><strong class="text-txt">Urdu Script</strong> — detected via Unicode range U+0600–U+06FF (any Arabic/Persian character present)</li>
+        <li><strong class="text-txt">Roman Urdu / Mixed</strong> — detected by matching against a 50+ word lexicon of Roman Urdu markers (acha, bohat, zabardast, mazedar, lazeez, behtreen, etc.)</li>
+        <li><strong class="text-txt">English / Other</strong> — everything else, the default classification</li>
+      </ul>
+      <p>This flag determines which transformer model handles the review in the ensemble routing step.</p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        <span class="model-tag">regex</span><span class="model-tag">Unicode</span><span class="model-tag">50+ word lexicon</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. BENCHMARKING -->
+  <section class="mb-16">
+    <div class="flex items-center gap-3 mb-5">
+      <span class="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold text-white" style="background:var(--brand)">3</span>
+      <h2 class="font-display font-bold text-2xl text-txt">Model Benchmarking</h2>
+    </div>
+    <p class="text-txt-sub leading-relaxed mb-6">Two transformer models were benchmarked on held-out labeled data <em>before</em> any production use. A data-driven VADER lexicon baseline was also built from training data for comparison:</p>
+    <div class="overflow-x-auto rounded-2xl glass">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b text-left text-txt-muted" style="border-color:var(--border-color)">
+            <th class="p-4">Model</th><th class="p-4">Language</th><th class="p-4">Accuracy</th><th class="p-4">Macro F1</th><th class="p-4">Test set</th>
+          </tr>
+        </thead>
+        <tbody id="benchmark-table-body"></tbody>
+      </table>
+    </div>
+    <div class="mt-6 h-72"><canvas id="benchmark-chart"></canvas></div>
+    <p class="text-xs text-txt-muted mt-4">The Roman Urdu benchmark (Sharf, 2018 / UCI Roman Urdu Dataset) is independent of either model's training data. The English benchmark (TweetEval sentiment) may share data lineage with cardiffnlp's fine-tuning history.</p>
+    <div class="flex flex-wrap gap-2 mt-4">
+      <span class="model-tag">cardiffnlp/twitter-xlm-roberta-base-sentiment</span>
+      <span class="model-tag">Khubaib01/roman-urdu-sentiment-xlm-r</span>
+      <span class="model-tag">VADER lexicon</span>
+    </div>
+  </section>
+
+  <!-- 4. ENSEMBLE INFERENCE -->
+  <section class="mb-16">
+    <div class="flex items-center gap-3 mb-5">
+      <span class="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold text-white" style="background:var(--brand)">4</span>
+      <h2 class="font-display font-bold text-2xl text-txt">Dual-Transformer Ensemble Inference</h2>
+    </div>
+    <div class="glass rounded-2xl p-6 leading-relaxed text-txt-sub">
+      <p class="mb-3">Both transformer models run on <strong class="text-txt">every single review</strong> — not just a sample. This produces two independent predictions and two confidence scores per review, enabling disagreement-based uncertainty flagging.</p>
+      <p class="mb-3">Inference runs in GPU-accelerated batches (batch size 128, mixed precision fp16 on CUDA). Progress is checkpointed every 200 batches, so if the Kaggle GPU session times out, it resumes from where it left off rather than restarting.</p>
+      <p>Text is truncated to 64 tokens — sufficient for food delivery reviews, which are typically 1–3 sentences.</p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        <span class="model-tag">PyTorch</span><span class="model-tag">CUDA fp16</span><span class="model-tag">batch size 128</span><span class="model-tag">max_len 64</span><span class="model-tag">checkpoint every 200 batches</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. LANGUAGE ROUTING -->
+  <section class="mb-16">
+    <div class="flex items-center gap-3 mb-5">
+      <span class="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold text-white" style="background:var(--brand)">5</span>
+      <h2 class="font-display font-bold text-2xl text-txt">Language-Aware Routing</h2>
+    </div>
+    <div class="glass rounded-2xl p-6 leading-relaxed text-txt-sub">
+      <p class="mb-3">The final sentiment label is determined by routing based on the language flag:</p>
+      <ul class="space-y-2 mb-4">
+        <li><strong class="text-txt">Roman Urdu / Mixed</strong> → specialist model (Khubaib01) is primary, general model is secondary</li>
+        <li><strong class="text-txt">English / Urdu Script</strong> → general model (cardiffnlp) is primary, specialist is secondary</li>
+      </ul>
+      <p class="mb-3">The <strong class="text-txt">confidence threshold</strong> is set at 0.60. Reviews where models disagree OR where primary confidence drops below this threshold are flagged for LLM review — creating a transparent "uncertainty queue" rather than silently trusting a single prediction.</p>
+      <p>This means approximately 80% of reviews get high-confidence routed labels, while ~20% are flagged for deeper investigation.</p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        <span class="model-tag">confidence ≥ 0.60</span><span class="model-tag">disagreement flagging</span><span class="model-tag">~80% agreement rate</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. ASPECT EXTRACTION -->
+  <section class="mb-16">
+    <div class="flex items-center gap-3 mb-5">
+      <span class="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold text-white" style="background:var(--brand)">6</span>
+      <h2 class="font-display font-bold text-2xl text-txt">Keyword-Based Aspect Extraction</h2>
+    </div>
+    <div class="glass rounded-2xl p-6 leading-relaxed text-txt-sub">
+      <p class="mb-3">Seven aspect categories are detected using a multilingual keyword dictionary covering both English and Roman Urdu terms:</p>
+      <div class="grid sm:grid-cols-2 gap-3 mb-4">
+        <div class="rounded-xl p-3" style="background:var(--bg-surface2)">
+          <div class="font-semibold text-sm text-txt mb-1">Taste</div>
+          <p class="text-xs text-txt-muted">tasty, flavour, zaiqa, mazedar, lazeez, namkeen, teekha...</p>
+        </div>
+        <div class="rounded-xl p-3" style="background:var(--bg-surface2)">
+          <div class="font-semibold text-sm text-txt mb-1">Quantity</div>
+          <p class="text-xs text-txt-muted">portion, kam, chota, size, serving, thori, bara...</p>
+        </div>
+        <div class="rounded-xl p-3" style="background:var(--bg-surface2)">
+          <div class="font-semibold text-sm text-txt mb-1">Price</div>
+          <p class="text-xs text-txt-muted">expensive, cheap, mehnga, sasta, overpriced, paisa...</p>
+        </div>
+        <div class="rounded-xl p-3" style="background:var(--bg-surface2)">
+          <div class="font-semibold text-sm text-txt mb-1">Delivery/Rider</div>
+          <p class="text-xs text-txt-muted">late, rider, jaldi, fast, slow, delay, dair, wait...</p>
+        </div>
+        <div class="rounded-xl p-3" style="background:var(--bg-surface2)">
+          <div class="font-semibold text-sm text-txt mb-1">Packaging</div>
+          <p class="text-xs text-txt-muted">packing, shopper, leak, spilled, torn, container, seal...</p>
+        </div>
+        <div class="rounded-xl p-3" style="background:var(--bg-surface2)">
+          <div class="font-semibold text-sm text-txt mb-1">Hygiene</div>
+          <p class="text-xs text-txt-muted">dirty, ganda, hair, cockroach, stale, baasi, rotten...</p>
+        </div>
+        <div class="rounded-xl p-3 sm:col-span-2" style="background:var(--bg-surface2)">
+          <div class="font-semibold text-sm text-txt mb-1">Service</div>
+          <p class="text-xs text-txt-muted">behavior, staff, rude, polite, attitude, professional, instructions...</p>
+        </div>
+      </div>
+      <p>Text is normalized before matching: repeated characters are collapsed (<code class="model-tag">boooht → boht</code>) and non-alpha characters are stripped. Approximately 55% of reviews match at least one aspect keyword.</p>
+    </div>
+  </section>
+
+  <!-- 7. ZERO-SHOT DISCOVERY -->
+  <section class="mb-16">
+    <div class="flex items-center gap-3 mb-5">
+      <span class="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold text-white" style="background:var(--brand)">7</span>
+      <h2 class="font-display font-bold text-2xl text-txt">Zero-Shot Aspect Discovery</h2>
+    </div>
+    <p class="text-txt-sub leading-relaxed mb-6">The keyword method has a real "blind spot" — reviews with zero aspect keywords. To discover what it misses, a cross-lingual NLI model was run on a <strong class="text-txt">10,000-review sample</strong> of these blind-spot reviews:</p>
+    <div class="glass rounded-2xl p-6 mb-4">
+      <div class="flex flex-wrap items-center gap-2 mb-3">
+        <span class="model-tag">MoritzLaurer/mDeBERTa-v3-base-mnli-xnli</span>
+        <span class="model-tag">multi_label=True</span>
+        <span class="model-tag">confidence ≥ 0.5</span>
+      </div>
+      <p class="text-sm text-txt-sub mb-4">This model was chosen because mDeBERTa-v3 is trained on multilingual NLI data (100+ languages) and can classify text into arbitrary candidate labels without fine-tuning. Candidate labels included both existing aspect categories and new ones like "wrong item received", "refund or payment issue", "food arrived cold", and "app or ordering technical issue".</p>
+    </div>
+    <div id="zero-shot-findings" class="grid sm:grid-cols-2 gap-3 mb-4"></div>
+    <p class="text-xs text-txt-muted">This ran on 10k reviews (not the full 1.5M dataset) — as a student with Kaggle GPU limits, this was a scoped proof of concept to show what to add to the keyword list next.</p>
+  </section>
+
+  <!-- 8. BERTOPIC -->
+  <section class="mb-16">
+    <div class="flex items-center gap-3 mb-5">
+      <span class="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold text-white" style="background:var(--brand)">8</span>
+      <h2 class="font-display font-bold text-2xl text-txt">Unsupervised Topic Modeling (BERTopic)</h2>
+    </div>
+    <div class="glass rounded-2xl p-6 leading-relaxed text-txt-sub">
+      <p class="mb-3">To discover organic topic clusters without any predefined labels, <strong class="text-txt">100,000 reviews</strong> were embedded with <code class="model-tag">paraphrase-multilingual-MiniLM-L12-v2</code> and clustered using BERTopic.</p>
+      <p class="mb-3">A custom stopword list combined English stopwords with 50+ Roman Urdu function words (acha, bohat, hai, tha, kya, etc.) to prevent them from dominating topic labels. The vectorizer used bigram features with min_df=10.</p>
+      <p>The model discovered <strong class="text-txt">dozens of organic topic clusters</strong> — some confirming known aspects (taste complaints, delivery issues), others revealing patterns neither the keyword list nor zero-shot classifier anticipated.</p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        <span class="model-tag">BERTopic</span>
+        <span class="model-tag">sentence-transformers</span>
+        <span class="model-tag">100k sample</span>
+        <span class="model-tag">bigram features</span>
+        <span class="model-tag">min_topic_size=100</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. SHAP -->
+  <section class="mb-16">
+    <div class="flex items-center gap-3 mb-5">
+      <span class="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold text-white" style="background:var(--brand)">9</span>
+      <h2 class="font-display font-bold text-2xl text-txt">SHAP Explainability</h2>
+    </div>
+    <div class="glass rounded-2xl p-6 leading-relaxed text-txt-sub">
+      <p class="mb-3"><strong class="text-txt">SHAP (SHapley Additive exPlanations)</strong> was applied to explain individual predictions at the word level. For each review, SHAP shows which specific words pushed the model toward positive, negative, or neutral — making the transformer's decisions interpretable rather than opaque.</p>
+      <p class="mb-3">SHAP was run specifically on the <strong class="text-txt">LLM review queue</strong> (reviews where models disagreed or confidence was low) to understand <em>why</em> the ensemble was uncertain. Key findings: Roman Urdu function words like "hai", "tha", "mein" were major confusion sources for the general model, while sentiment-bearing words like "zabardast", "bakwas", "lazeez" were correctly weighted by the specialist model.</p>
+      <p>A word-level masker with a regex tokenizer (<code class="model-tag">\b\w+\b</code>) was used, with fallback handling for very short or emoji-only reviews that SHAP couldn't tokenize.</p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        <span class="model-tag">SHAP</span>
+        <span class="model-tag">Text masker</span>
+        <span class="model-tag">word-level contributions</span>
+        <span class="model-tag">applied to LLM queue</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. LLM REVIEW QUEUE -->
+  <section class="mb-16">
+    <div class="flex items-center gap-3 mb-5">
+      <span class="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold text-white" style="background:var(--brand)">10</span>
+      <h2 class="font-display font-bold text-2xl text-txt">LLM Review Queue & Aggregation</h2>
+    </div>
+    <div class="glass rounded-2xl p-6 leading-relaxed text-txt-sub">
+      <p class="mb-3">Reviews flagged by the routing step (models disagree OR confidence &lt; 0.60) form a <strong class="text-txt">prioritized review queue</strong> — exported as <code class="model-tag">llm_review_queue.csv</code>. These are the reviews where a more capable LLM (like GPT-4 or Groq) could add value, and the web platform's AI assistant uses this same queue logic.</p>
+      <p class="mb-3">All results are aggregated at multiple levels: <strong class="text-txt">city summaries</strong> (sentiment mix, avg star rating, top complaint, reliability scores), <strong class="text-txt">restaurant summaries</strong> (per-store sentiment, aspect breakdowns, top complaint/praise), and <strong class="text-txt">national aspect summaries</strong> (total mentions, negative rate per aspect).</p>
+      <p class="mb-3"><strong class="text-txt">Temporal trends</strong> are computed monthly — tracking positive/negative/neutral percentages over time, with a 3-month rolling average to identify months where sentiment deviated significantly.</p>
+      <p><strong class="text-txt">City reliability scores</strong> measure model agreement rate by region — checking whether the pipeline works equally well across Pakistan's diverse linguistic landscape.</p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        <span class="model-tag">DuckDB</span>
+        <span class="model-tag">city-level aggregation</span>
+        <span class="model-tag">temporal trends</span>
+        <span class="model-tag">reliability metrics</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEMPORAL -->
+  <section class="mb-16">
+    <div class="flex items-center gap-3 mb-5">
+      <span class="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold text-white" style="background:var(--brand)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </span>
+      <h2 class="font-display font-bold text-2xl text-txt">Sentiment over time</h2>
+    </div>
+    <div class="glass rounded-2xl p-6">
+      <div class="h-64"><canvas id="temporal-chart"></canvas></div>
+    </div>
+  </section>
+
+  <!-- RELIABILITY -->
+  <section class="mb-16">
+    <div class="flex items-center gap-3 mb-5">
+      <span class="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold text-white" style="background:var(--brand)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </span>
+      <h2 class="font-display font-bold text-2xl text-txt">Does reliability vary by region?</h2>
+    </div>
+    <p class="text-txt-sub leading-relaxed mb-6">Agreement rate between the two models, city by city — an honest check for whether the pipeline works worse in some regions than others.</p>
+    <div class="glass rounded-2xl p-6">
+      <div class="h-80"><canvas id="reliability-chart"></canvas></div>
+    </div>
+  </section>
+
+  <!-- LIMITATIONS -->
+  <section>
+    <div class="flex items-center gap-3 mb-5">
+      <span class="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold text-white" style="background:var(--negative)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+      </span>
+      <h2 class="font-display font-bold text-2xl text-txt">Known limitations, stated plainly</h2>
+    </div>
+    <div class="glass rounded-2xl p-6 space-y-3 text-sm text-txt-sub leading-relaxed">
+      <p>• Neither model reaches "solved" accuracy — 67.9% on Roman Urdu is a real improvement over a general model's 48.8%, not a finished result.</p>
+      <p>• Both models measurably over-predict "negative" on the benchmark, which likely inflates the platform-wide negative percentage somewhat beyond the true rate.</p>
+      <p>• Zero-shot aspect discovery ran on a 10k-review sample, not the full dataset, due to student compute constraints on Kaggle GPU.</p>
+      <p>• BERTopic ran on 100k reviews — representative but not exhaustive.</p>
+      <p>• The keyword-based aspect list is a fixed vocabulary — it has a real, measured false-negative rate even for categories it does try to detect.</p>
+      <p>• Urdu Script reviews are routed to the general multilingual model, which wasn't specifically benchmarked on Urdu script food reviews.</p>
+      <p>• Star ratings and text sentiment often diverge — a 5-star review can contain negative text (e.g., "food was good but delivery was terrible"), and the pipeline captures this nuance.</p>
+    </div>
+  </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/sentiment_ui.js') }}"></script>
+<script src="{{ url_for('static', filename='js/methodology.js') }}"></script>
+{% endblock %}

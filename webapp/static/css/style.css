@@ -1,0 +1,621 @@
+/* ===================================================================
+   THEME VARIABLES — Light (default) & Dark
+   =================================================================== */
+:root {
+  --bg-page: #FAFAF7;
+  --bg-surface: #FFFFFF;
+  --bg-surface2: #F3F4EE;
+  --bg-elevated: #FFFFFF;
+  --text-primary: #1C1917;
+  --text-secondary: #57534E;
+  --text-muted: #A8A29E;
+  --border-color: rgba(28, 25, 23, 0.08);
+  --border-strong: rgba(28, 25, 23, 0.14);
+  --brand: #0D6B3F;
+  --brand-hover: #0A5632;
+  --brand-light: rgba(13, 107, 63, 0.08);
+  --brand-glow: rgba(13, 107, 63, 0.25);
+  --accent-gold: #B8860B;
+  --accent-gold-light: rgba(184, 134, 11, 0.1);
+  --mint: #0D9B6E;
+  --positive: #16A34A;
+  --negative: #DC2626;
+  --neutralc: #78716C;
+  --amber: #D97706;
+  --input-bg: #FFFFFF;
+  --input-border: rgba(28, 25, 23, 0.12);
+  --nav-bg: rgba(250, 250, 247, 0.92);
+  --footer-border: rgba(28, 25, 23, 0.06);
+  --chart-grid: rgba(28, 25, 23, 0.06);
+  --chart-text: #78716C;
+  --chart-border: #FFFFFF;
+  --skeleton-a: rgba(28, 25, 23, 0.04);
+  --skeleton-b: rgba(28, 25, 23, 0.08);
+  --pattern-opacity: 0.025;
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.03);
+  --shadow-elevated: 0 4px 24px rgba(0,0,0,0.06);
+  --hero-overlay-start: rgba(250,250,247,0.92);
+  --hero-overlay-mid: rgba(250,250,247,0.55);
+  --hero-overlay-end: rgba(250,250,247,0.15);
+}
+
+[data-theme="dark"] {
+  --bg-page: #0F1220;
+  --bg-surface: rgba(255,255,255,0.035);
+  --bg-surface2: #1E2340;
+  --bg-elevated: #161A2E;
+  --text-primary: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --border-color: rgba(255,255,255,0.07);
+  --border-strong: rgba(255,255,255,0.12);
+  --brand: #6C5CE7;
+  --brand-hover: #5442D6;
+  --brand-light: rgba(108,92,231,0.12);
+  --brand-glow: rgba(108,92,231,0.45);
+  --accent-gold: #FBBF24;
+  --accent-gold-light: rgba(251,191,36,0.1);
+  --mint: #2DD4BF;
+  --positive: #2ECC71;
+  --negative: #F0553F;
+  --neutralc: #94A3B8;
+  --amber: #FBBF24;
+  --input-bg: rgba(255,255,255,0.04);
+  --input-border: rgba(255,255,255,0.1);
+  --nav-bg: rgba(15, 18, 32, 0.88);
+  --footer-border: rgba(255,255,255,0.05);
+  --chart-grid: rgba(255,255,255,0.05);
+  --chart-text: #94A3B8;
+  --chart-border: #161A2E;
+  --skeleton-a: rgba(255,255,255,.04);
+  --skeleton-b: rgba(255,255,255,.09);
+  --pattern-opacity: 0.012;
+  --shadow-card: none;
+  --shadow-elevated: none;
+  --hero-overlay-start: rgba(15,18,32,0.92);
+  --hero-overlay-mid: rgba(15,18,32,0.55);
+  --hero-overlay-end: rgba(15,18,32,0.15);
+}
+
+/* ===================================================================
+   BASE
+   =================================================================== */
+body {
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  transition: background-color .3s ease, color .3s ease;
+}
+
+/* Subtle Ajrak-inspired diamond lattice overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: var(--pattern-opacity);
+  background-image:
+    repeating-linear-gradient(45deg, var(--text-primary) 0, var(--text-primary) 1px, transparent 1px, transparent 24px),
+    repeating-linear-gradient(-45deg, var(--text-primary) 0, var(--text-primary) 1px, transparent 1px, transparent 24px),
+    repeating-linear-gradient(0deg, var(--accent-gold) 0, var(--accent-gold) 0.5px, transparent 0.5px, transparent 48px),
+    repeating-linear-gradient(90deg, var(--accent-gold) 0, var(--accent-gold) 0.5px, transparent 0.5px, transparent 48px);
+}
+
+body > * { position: relative; z-index: 1; }
+
+/* ===================================================================
+   GLASS / CARD
+   =================================================================== */
+.glass {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(6px);
+  transition: background .3s, border-color .3s, box-shadow .3s;
+}
+[data-theme="dark"] .glass { backdrop-filter: blur(6px); }
+
+.glass-hover { transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease; }
+.glass-hover:hover {
+  transform: translateY(-2px);
+  border-color: var(--brand);
+  box-shadow: var(--shadow-elevated);
+}
+
+/* ===================================================================
+   GRADIENT TEXT — Pakistani green + gold
+   =================================================================== */
+.grad-text {
+  background: linear-gradient(90deg, var(--brand), var(--accent-gold));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+/* ===================================================================
+   NAVBAR LOGO — Arabic calligraphy badge
+   =================================================================== */
+.logo-mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--brand), var(--accent-gold));
+  box-shadow: 0 2px 8px rgba(13, 107, 63, 0.25);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.logo-arabic {
+  font-family: 'Amiri', serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+  direction: rtl;
+  line-height: 1.1;
+  text-align: center;
+  letter-spacing: 0;
+}
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.logo-name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--brand);
+  line-height: 1.2;
+}
+.logo-name .logo-pk {
+  color: var(--accent-gold);
+  font-weight: 600;
+}
+.logo-sub {
+  display: block;
+  font-size: 0.65rem;
+  color: var(--brand);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+}
+
+/* ===================================================================
+   CALLIGRAPHY — Urdu-style decorative headings
+   =================================================================== */
+.urdu-heading {
+  font-family: 'Noto Nastaliq Urdu', 'Amiri', serif;
+  letter-spacing: 0;
+  line-height: 3 !important;
+}
+
+.arabic-calligraphy {
+  font-family: 'Amiri', 'Noto Nastaliq Urdu', serif;
+  letter-spacing: 0;
+  line-height: 1.8;
+  direction: rtl;
+}
+
+/* Author section calligraphy styles */
+.author-caligraphy-name {
+  font-family: 'Noto Nastaliq Urdu', 'Amiri', serif;
+  background: linear-gradient(135deg, var(--accent-gold), #D4AF37, var(--brand));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 5.5rem !important;
+  overflow: visible;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.author-ornament-line {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.author-ornament-line::before,
+.author-ornament-line::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+  opacity: 0.4;
+}
+
+.ornament {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 1rem;
+}
+.ornament::before, .ornament::after {
+  content: ""; flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+  opacity: 0.4;
+}
+
+.geometric-border {
+  border-image: repeating-linear-gradient(
+    90deg,
+    var(--accent-gold) 0, var(--accent-gold) 8px,
+    transparent 8px, transparent 16px,
+    var(--brand) 16px, var(--brand) 24px,
+    transparent 24px, transparent 32px
+  ) 4;
+  border-width: 3px 0; border-style: solid;
+}
+
+/* ===================================================================
+   SENTIMENT BADGES
+   =================================================================== */
+.sentiment-badge {
+  display: inline-flex; align-items: center; gap: .35rem;
+  padding: .2rem .65rem; border-radius: 999px; font-size: .75rem; font-weight: 600; text-transform: capitalize;
+}
+.sentiment-badge.positive { background: rgba(22,163,74,.1); color: var(--positive); }
+.sentiment-badge.neutral  { background: rgba(120,113,108,.1); color: var(--neutralc); }
+.sentiment-badge.negative { background: rgba(220,38,38,.1); color: var(--negative); }
+[data-theme="dark"] .sentiment-badge.positive { background: rgba(46,204,113,.14); }
+[data-theme="dark"] .sentiment-badge.neutral  { background: rgba(148,163,184,.14); }
+[data-theme="dark"] .sentiment-badge.negative { background: rgba(240,85,63,.14); }
+
+/* ===================================================================
+   ASPECT CHIPS
+   =================================================================== */
+.aspect-chip {
+  display: inline-block; padding: .15rem .55rem; border-radius: 6px; font-size: .7rem; font-weight: 500;
+  background: var(--brand-light); color: var(--brand); border: 1px solid var(--border-color);
+}
+
+/* ===================================================================
+   PROGRESS BARS
+   =================================================================== */
+.progress-track { height: 8px; border-radius: 999px; background: var(--border-color); overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 999px; transition: width .6s cubic-bezier(.22,1,.36,1); }
+
+/* ===================================================================
+   BANNER
+   =================================================================== */
+.banner-wrap { position: relative; overflow: hidden; }
+.banner-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.banner-fade {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.15) 50%, var(--bg-page) 100%);
+}
+[data-theme="dark"] .banner-fade {
+  background: linear-gradient(180deg, rgba(15,18,32,0) 0%, rgba(15,18,32,.55) 65%, rgba(15,18,32,1) 100%);
+}
+
+/* ===================================================================
+   SCROLLBAR
+   =================================================================== */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
+
+/* ===================================================================
+   SKELETON LOADING
+   =================================================================== */
+.skeleton {
+  background: linear-gradient(90deg, var(--skeleton-a) 25%, var(--skeleton-b) 37%, var(--skeleton-a) 63%);
+  background-size: 400% 100%; animation: skeleton-loading 1.4s ease infinite; border-radius: 8px;
+}
+@keyframes skeleton-loading { 0% { background-position: 100% 50%; } 100% { background-position: 0 50%; } }
+
+/* ===================================================================
+   CHAT BUBBLES
+   =================================================================== */
+.chat-bubble-user { background: linear-gradient(135deg, var(--brand), var(--brand-hover)); }
+.chat-bubble-assistant { background: var(--bg-surface); border: 1px solid var(--border-color); }
+
+/* Formatted AI chat response */
+.chat-formatted p {
+  margin-bottom: 0.5rem;
+}
+.chat-formatted p:last-child {
+  margin-bottom: 0;
+}
+.chat-formatted strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+.chat-formatted ul.chat-ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0.4rem 0;
+}
+.chat-formatted ul.chat-ul li {
+  position: relative;
+  padding-left: 1.25rem;
+  margin-bottom: 0.35rem;
+}
+.chat-formatted ul.chat-ul li::before {
+  content: "";
+  position: absolute;
+  left: 0.25rem;
+  top: 0.55rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brand);
+  opacity: 0.6;
+}
+.chat-formatted ol.chat-ol {
+  list-style: none;
+  padding-left: 0;
+  counter-reset: chat-step;
+  margin: 0.4rem 0;
+}
+.chat-formatted ol.chat-ol li {
+  position: relative;
+  padding-left: 1.75rem;
+  margin-bottom: 0.4rem;
+  counter-increment: chat-step;
+}
+.chat-formatted ol.chat-ol li::before {
+  content: counter(chat-step);
+  position: absolute;
+  left: 0;
+  top: 0.05rem;
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+  background: var(--brand);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.chat-formatted code.chat-code {
+  background: var(--bg-surface2);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.82em;
+  color: var(--brand);
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+.chat-formatted .chat-heading {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--brand);
+  margin-top: 0.6rem;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.01em;
+}
+.chat-formatted .chat-blockquote {
+  margin: 0.5rem 0;
+  padding: 0.5rem 0.75rem;
+  border-left: 3px solid var(--accent-gold);
+  background: linear-gradient(135deg, rgba(184,134,11,0.06), rgba(26,86,50,0.04));
+  border-radius: 0 8px 8px 0;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.chat-formatted .chat-hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+  margin: 0.6rem 0;
+}
+.chat-formatted .chat-table-wrap {
+  overflow-x: auto;
+  margin: 0.5rem 0;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+.chat-formatted .chat-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+.chat-formatted .chat-table thead th {
+  background: var(--bg-surface2);
+  color: var(--text-primary);
+  font-weight: 600;
+  text-align: left;
+  padding: 0.45rem 0.6rem;
+  border-bottom: 2px solid var(--border-strong);
+  white-space: nowrap;
+}
+.chat-formatted .chat-table tbody td {
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: top;
+}
+.chat-formatted .chat-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.chat-formatted .chat-table tbody tr:hover {
+  background: var(--brand-light);
+}
+
+/* ===================================================================
+   ANIMATIONS
+   =================================================================== */
+.fade-in { animation: fadeIn .35s ease both; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+.slide-up { animation: slideUp .5s ease both; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ===================================================================
+   INPUTS
+   =================================================================== */
+input[type="text"], input[type="search"], textarea {
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-primary);
+}
+input[type="text"]:focus, input[type="search"]:focus, textarea:focus {
+  outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-light);
+}
+input::placeholder, textarea::placeholder { color: var(--text-muted); }
+
+/* ===================================================================
+   TAB BUTTONS
+   =================================================================== */
+.tab-btn { transition: all .15s ease; }
+.tab-btn.active { background: var(--brand); color: white; }
+.tab-btn:not(.active) { background: var(--bg-surface2); color: var(--text-secondary); }
+.tab-btn:not(.active):hover { background: var(--border-color); color: var(--text-primary); }
+
+/* ===================================================================
+   THEME TOGGLE BUTTON
+   =================================================================== */
+.theme-toggle {
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 10px; background: var(--bg-surface2);
+  border: 1px solid var(--border-color); cursor: pointer;
+  transition: background .2s, border-color .2s; color: var(--text-secondary);
+}
+.theme-toggle:hover { border-color: var(--brand); color: var(--brand); }
+.theme-toggle svg { width: 18px; height: 18px; }
+[data-theme="dark"] .theme-toggle .icon-sun { display: none; }
+[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
+:root .theme-toggle .icon-sun { display: block; }
+:root .theme-toggle .icon-moon { display: none; }
+
+/* ===================================================================
+   DECORATIVE — Pakistani elements
+   =================================================================== */
+.pk-divider {
+  display: flex; align-items: center; gap: 16px; margin: 2rem 0;
+}
+.pk-divider::before, .pk-divider::after {
+  content: ""; flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+}
+.pk-divider-icon { color: var(--accent-gold); font-size: 14px; opacity: 0.6; }
+
+.pk-accent-bar {
+  width: 48px; height: 4px;
+  background: linear-gradient(90deg, var(--brand), var(--accent-gold));
+  border-radius: 999px; margin-bottom: 1rem;
+}
+
+/* Ajrak-inspired pattern band */
+.ajrak-band {
+  height: 6px;
+  background:
+    repeating-linear-gradient(90deg,
+      var(--brand) 0, var(--brand) 12px,
+      var(--accent-gold) 12px, var(--accent-gold) 18px,
+      var(--negative) 18px, var(--negative) 24px,
+      var(--accent-gold) 24px, var(--accent-gold) 30px
+    );
+  opacity: 0.5;
+  border-radius: 3px;
+}
+
+/* Ajrak star pattern for section backgrounds */
+.ajrak-bg {
+  position: relative;
+}
+.ajrak-bg::after {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  opacity: 0.02;
+  background-image:
+    radial-gradient(circle at 25% 25%, var(--brand) 1px, transparent 1px),
+    radial-gradient(circle at 75% 75%, var(--accent-gold) 1px, transparent 1px),
+    radial-gradient(circle at 50% 50%, var(--text-primary) 0.5px, transparent 0.5px);
+  background-size: 32px 32px, 32px 32px, 16px 16px;
+}
+[data-theme="dark"] .ajrak-bg::after { opacity: 0.04; }
+
+/* Hero overlay — stronger start to prevent white-bg blending */
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg,
+    var(--hero-overlay-start) 0%,
+    var(--hero-overlay-mid) 45%,
+    var(--hero-overlay-end) 100%);
+}
+
+/* Pipeline step — 2-col grid on desktop */
+.pipeline-step {
+  position: relative;
+}
+.pipeline-dot {
+  width: 24px; height: 24px; min-width: 24px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: white;
+  background: var(--brand);
+}
+
+/* Region cultural cards */
+.region-card {
+  position: relative; overflow: hidden;
+  border-radius: 1rem; padding: 1.5rem;
+  transition: transform .2s, box-shadow .2s;
+}
+.region-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-elevated); }
+.region-card .region-pattern {
+  position: absolute; top: 0; right: 0; width: 80px; height: 80px;
+  opacity: 0.08;
+}
+
+/* Icon wrapper (replaces emoji containers) */
+.icon-wrap {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--brand);
+}
+.icon-wrap svg { width: 22px; height: 22px; }
+.icon-wrap.gold { color: var(--accent-gold); }
+.icon-wrap.mint { color: var(--mint); }
+
+/* Author / credit section */
+.author-card {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 1rem;
+}
+.author-avatar {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 700; color: white;
+  background: linear-gradient(135deg, var(--brand), var(--accent-gold));
+  flex-shrink: 0;
+}
+
+/* Stat pill */
+.stat-pill {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem; font-weight: 600;
+  background: var(--brand-light);
+  color: var(--brand);
+}
+
+/* Model architecture tag */
+.model-tag {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.65rem; font-weight: 600;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  background: var(--bg-surface2);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+/* Responsive grid helpers */
+@media (max-width: 640px) {
+  .hero-overlay {
+    background: linear-gradient(180deg,
+      var(--hero-overlay-start) 0%,
+      var(--hero-overlay-mid) 60%,
+      var(--hero-overlay-end) 100%);
+  }
+}

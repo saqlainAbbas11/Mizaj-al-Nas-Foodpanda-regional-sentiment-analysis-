@@ -1,0 +1,168 @@
+<svg viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice">
+  <defs>
+    <linearGradient id="pshSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1A1230"/>
+      <stop offset="25%" stop-color="#2B1E3D"/>
+      <stop offset="50%" stop-color="#6A3A30"/>
+      <stop offset="75%" stop-color="#B87040"/>
+      <stop offset="100%" stop-color="#E8A24C"/>
+    </linearGradient>
+    <linearGradient id="pshGround" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3A2E28"/>
+      <stop offset="100%" stop-color="#281E14"/>
+    </linearGradient>
+    <radialGradient id="pshSunset" cx="0.5" cy="0.7" r="0.35">
+      <stop offset="0%" stop-color="#E8A050" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#E8A050" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="pshFortWall" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#A06A48"/>
+      <stop offset="100%" stop-color="#7A4D33"/>
+    </linearGradient>
+    <linearGradient id="pshTower" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#9A6544"/>
+      <stop offset="50%" stop-color="#B07A55"/>
+      <stop offset="100%" stop-color="#8A5838"/>
+    </linearGradient>
+    <linearGradient id="pshHill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4A3826"/>
+      <stop offset="100%" stop-color="#3A2A1C"/>
+    </linearGradient>
+    <pattern id="pashtunPattern" width="70" height="40" patternUnits="userSpaceOnUse">
+      <rect width="70" height="40" fill="#3D2B1F"/>
+      <polygon points="0,20 17.5,4 35,20 17.5,36" fill="none" stroke="#D8933A" stroke-width="2"/>
+      <polygon points="35,20 52.5,4 70,20 52.5,36" fill="none" stroke="#D8933A" stroke-width="2"/>
+      <circle cx="17.5" cy="20" r="4" fill="#C9542E"/><circle cx="17.5" cy="20" r="1.8" fill="#E8B060"/>
+      <circle cx="52.5" cy="20" r="4" fill="#4E7C6E"/><circle cx="52.5" cy="20" r="1.8" fill="#7AB8A0"/>
+      <line x1="0" y1="0" x2="17.5" y2="4" stroke="#D8933A" stroke-width="0.8" opacity="0.4"/>
+      <line x1="35" y1="0" x2="17.5" y2="4" stroke="#D8933A" stroke-width="0.8" opacity="0.4"/>
+      <line x1="35" y1="0" x2="52.5" y2="4" stroke="#D8933A" stroke-width="0.8" opacity="0.4"/>
+      <line x1="70" y1="0" x2="52.5" y2="4" stroke="#D8933A" stroke-width="0.8" opacity="0.4"/>
+    </pattern>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="1200" height="300" fill="url(#pshSky)"/>
+  <rect width="1200" height="300" fill="url(#pshSunset)"/>
+
+  <!-- Stars -->
+  <g fill="white">
+    <circle cx="70" cy="20" r="1.1" opacity="0.8"/><circle cx="180" cy="42" r="0.7" opacity="0.5"/>
+    <circle cx="310" cy="14" r="0.9" opacity="0.7"/><circle cx="440" cy="36" r="0.8" opacity="0.5"/>
+    <circle cx="570" cy="10" r="1" opacity="0.6"/><circle cx="700" cy="32" r="0.7" opacity="0.5"/>
+    <circle cx="830" cy="18" r="1.2" opacity="0.8"/><circle cx="960" cy="44" r="0.6" opacity="0.4"/>
+    <circle cx="1080" cy="24" r="1" opacity="0.7"/><circle cx="1150" cy="55" r="0.7" opacity="0.4"/>
+    <circle cx="130" cy="60" r="0.5" opacity="0.3"/><circle cx="400" cy="58" r="0.5" opacity="0.3"/>
+  </g>
+
+  <!-- Distant mountains -->
+  <g fill="#3A2840" opacity="0.6">
+    <path d="M0,260 L80,195 L180,240 L300,170 L440,230 L560,165 L700,225 L840,175 L960,235 L1080,180 L1200,220 L1200,300 L0,300 Z"/>
+  </g>
+
+  <!-- Wispy clouds -->
+  <g fill="white" opacity="0.05">
+    <ellipse cx="250" cy="95" rx="130" ry="10"/><ellipse cx="320" cy="90" rx="80" ry="7"/>
+    <ellipse cx="850" cy="110" rx="110" ry="9"/><ellipse cx="910" cy="106" rx="70" ry="6"/>
+  </g>
+
+  <!-- Ground -->
+  <rect y="270" width="1200" height="90" fill="url(#pshGround)"/>
+
+  <!-- Hillside the fort sits on -->
+  <path d="M0,310 L150,260 L350,240 L550,230 L750,235 L950,245 L1200,260 L1200,310 Z" fill="url(#pshHill)" opacity="0.9"/>
+  <!-- Hill texture lines -->
+  <g stroke="#5A4A36" stroke-width="0.8" opacity="0.3">
+    <path d="M100,280 Q250,265 400,270 T700,272 T1000,275"/>
+    <path d="M50,295 Q200,282 400,285 T750,288 T1100,290"/>
+  </g>
+
+  <!-- Bala Hisar Fort -->
+  <g transform="translate(600,290)">
+    <!-- outer wall base -->
+    <rect x="-300" y="-65" width="600" height="65" fill="url(#pshFortWall)"/>
+    <rect x="-300" y="-75" width="600" height="12" fill="#8A5838"/>
+    <!-- wall texture -->
+    <g stroke="#7A4D33" stroke-width="0.8" opacity="0.4">
+      <line x1="-280" y1="-55" x2="280" y2="-55"/>
+      <line x1="-280" y1="-40" x2="280" y2="-40"/>
+      <line x1="-280" y1="-25" x2="280" y2="-25"/>
+    </g>
+
+    <!-- crenellations (merlons) -->
+    <g fill="#8A5838">
+      <rect x="-300" y="-89" width="22" height="16" rx="1"/><rect x="-256" y="-89" width="22" height="16" rx="1"/>
+      <rect x="-212" y="-89" width="22" height="16" rx="1"/><rect x="-168" y="-89" width="22" height="16" rx="1"/>
+      <rect x="-124" y="-89" width="22" height="16" rx="1"/><rect x="-80" y="-89" width="22" height="16" rx="1"/>
+      <rect x="-36" y="-89" width="22" height="16" rx="1"/><rect x="14" y="-89" width="22" height="16" rx="1"/>
+      <rect x="58" y="-89" width="22" height="16" rx="1"/><rect x="102" y="-89" width="22" height="16" rx="1"/>
+      <rect x="146" y="-89" width="22" height="16" rx="1"/><rect x="190" y="-89" width="22" height="16" rx="1"/>
+      <rect x="234" y="-89" width="22" height="16" rx="1"/><rect x="278" y="-89" width="22" height="16" rx="1"/>
+    </g>
+
+    <!-- corner bastions (tapered round towers) -->
+    <g fill="url(#pshTower)">
+      <!-- far left bastion -->
+      <polygon points="-330,-65 -280,-65 -290,-200 -320,-200"/>
+      <ellipse cx="-305" cy="-200" rx="15" ry="5" fill="#9A6544"/>
+      <!-- far right bastion -->
+      <polygon points="280,-65 330,-65 320,-200 290,-200"/>
+      <ellipse cx="305" cy="-200" rx="15" ry="5" fill="#9A6544"/>
+      <!-- center tower (tallest) -->
+      <polygon points="-35,-65 35,-65 20,-250 -20,-250"/>
+      <ellipse cx="0" cy="-250" rx="20" ry="6" fill="#9A6544"/>
+    </g>
+
+    <!-- bastion crenellations -->
+    <g fill="#7A4D33">
+      <rect x="-326" y="-214" width="40" height="15" rx="1"/>
+      <rect x="286" y="-214" width="40" height="15" rx="1"/>
+      <rect x="-24" y="-264" width="48" height="15" rx="1"/>
+    </g>
+    <!-- bastion window slits -->
+    <g fill="#3A2A20">
+      <rect x="-312" y="-170" width="6" height="16" rx="1"/><rect x="-300" y="-170" width="6" height="16" rx="1"/>
+      <rect x="-312" y="-130" width="6" height="16" rx="1"/><rect x="-300" y="-130" width="6" height="16" rx="1"/>
+      <rect x="296" y="-170" width="6" height="16" rx="1"/><rect x="308" y="-170" width="6" height="16" rx="1"/>
+      <rect x="296" y="-130" width="6" height="16" rx="1"/><rect x="308" y="-130" width="6" height="16" rx="1"/>
+      <rect x="-8" y="-220" width="6" height="18" rx="1"/><rect x="4" y="-220" width="6" height="18" rx="1"/>
+      <rect x="-8" y="-175" width="6" height="18" rx="1"/><rect x="4" y="-175" width="6" height="18" rx="1"/>
+    </g>
+
+    <!-- flag on center tower -->
+    <line x1="0" y1="-264" x2="0" y2="-298" stroke="#5A3D28" stroke-width="3"/>
+    <polygon points="0,-298 30,-288 0,-278" fill="#2E6B4F"/>
+    <polygon points="2,-296 22,-288 2,-280" fill="#3A8A65" opacity="0.5"/>
+
+    <!-- main gate (arched entrance) -->
+    <path d="M-45,0 L-45,-48 A45,45 0 0 1 45,-48 L45,0 Z" fill="#3A2A20"/>
+    <path d="M-40,0 L-40,-44 A40,40 0 0 1 40,-44 L40,0 Z" fill="#2A1A12"/>
+    <!-- gate door detail -->
+    <line x1="0" y1="0" x2="0" y2="-44" stroke="#4A3A28" stroke-width="2"/>
+    <circle cx="-12" cy="-20" r="3" fill="#5A4A38"/><circle cx="12" cy="-20" r="3" fill="#5A4A38"/>
+
+    <!-- torch/lamp glow on gate -->
+    <circle cx="-50" cy="-50" r="6" fill="#FFD680" opacity="0.4"/>
+    <circle cx="50" cy="-50" r="6" fill="#FFD680" opacity="0.4"/>
+    <circle cx="-50" cy="-50" r="12" fill="#FFD680" opacity="0.1"/>
+    <circle cx="50" cy="-50" r="12" fill="#FFD680" opacity="0.1"/>
+  </g>
+
+  <!-- Scattered vegetation -->
+  <g fill="#2A4030" opacity="0.6">
+    <ellipse cx="180" cy="310" rx="14" ry="10"/><ellipse cx="210" cy="315" rx="10" ry="8"/>
+    <ellipse cx="1020" cy="308" rx="12" ry="9"/><ellipse cx="1050" cy="312" rx="8" ry="7"/>
+  </g>
+
+  <!-- Distant village silhouettes -->
+  <g fill="#3A2820" opacity="0.5">
+    <rect x="80" y="296" width="25" height="18"/><polygon points="80,296 92,282 105,296"/>
+    <rect x="115" y="300" width="20" height="14"/>
+    <rect x="1060" y="298" width="22" height="16"/><polygon points="1060,298 1071,284 1082,298"/>
+    <rect x="1095" y="302" width="18" height="12"/>
+  </g>
+
+  <!-- Pashtun pattern strip -->
+  <rect y="360" width="1200" height="40" fill="url(#pashtunPattern)"/>
+  <rect y="358" width="1200" height="3" fill="#D8933A"/>
+</svg>

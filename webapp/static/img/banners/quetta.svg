@@ -1,0 +1,166 @@
+<svg viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice">
+  <defs>
+    <linearGradient id="quettaSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0E1530"/>
+      <stop offset="20%" stop-color="#1A2140"/>
+      <stop offset="45%" stop-color="#4A3060"/>
+      <stop offset="70%" stop-color="#8A5A6A"/>
+      <stop offset="100%" stop-color="#D9915A"/>
+    </linearGradient>
+    <linearGradient id="quettaGround" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2E2A3E"/>
+      <stop offset="100%" stop-color="#201C2E"/>
+    </linearGradient>
+    <linearGradient id="quettaMtnFar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5A4A68"/>
+      <stop offset="100%" stop-color="#3A2E48"/>
+    </linearGradient>
+    <linearGradient id="quettaMtnNear" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4A3A56"/>
+      <stop offset="100%" stop-color="#2E2440"/>
+    </linearGradient>
+    <radialGradient id="quettaGlow" cx="0.5" cy="0.68" r="0.3">
+      <stop offset="0%" stop-color="#D9915A" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#D9915A" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="quettaSnow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F0E8F0"/>
+      <stop offset="100%" stop-color="#D0C0D8"/>
+    </linearGradient>
+    <pattern id="baloch" width="80" height="50" patternUnits="userSpaceOnUse">
+      <rect width="80" height="50" fill="#3B1E33"/>
+      <polygon points="20,10 30,25 20,40 10,25" fill="none" stroke="#E0A03E" stroke-width="2"/>
+      <polygon points="60,10 70,25 60,40 50,25" fill="none" stroke="#E0A03E" stroke-width="2"/>
+      <circle cx="20" cy="25" r="4" fill="#C9542E"/><circle cx="20" cy="25" r="1.8" fill="#E8B060"/>
+      <circle cx="60" cy="25" r="4" fill="#4E8C7C"/><circle cx="60" cy="25" r="1.8" fill="#7AC0B0"/>
+      <line x1="0" y1="25" x2="80" y2="25" stroke="#E0A03E" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="20" y1="0" x2="20" y2="50" stroke="#E0A03E" stroke-width="0.5" stroke-dasharray="2,4" opacity="0.3"/>
+      <line x1="60" y1="0" x2="60" y2="50" stroke="#E0A03E" stroke-width="0.5" stroke-dasharray="2,4" opacity="0.3"/>
+      <circle cx="40" cy="0" r="2" fill="#E0A03E" opacity="0.4"/>
+      <circle cx="40" cy="50" r="2" fill="#E0A03E" opacity="0.4"/>
+    </pattern>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="1200" height="300" fill="url(#quettaSky)"/>
+  <rect width="1200" height="300" fill="url(#quettaGlow)"/>
+
+  <!-- Stars -->
+  <g fill="white">
+    <circle cx="55" cy="15" r="1.2" opacity="0.9"/><circle cx="165" cy="38" r="0.8" opacity="0.6"/>
+    <circle cx="290" cy="10" r="1" opacity="0.8"/><circle cx="420" cy="30" r="0.7" opacity="0.5"/>
+    <circle cx="550" cy="8" r="1.3" opacity="0.8"/><circle cx="680" cy="25" r="0.6" opacity="0.5"/>
+    <circle cx="810" cy="18" r="1.1" opacity="0.7"/><circle cx="940" cy="40" r="0.8" opacity="0.5"/>
+    <circle cx="1070" cy="12" r="1" opacity="0.8"/><circle cx="1150" cy="35" r="0.7" opacity="0.6"/>
+    <circle cx="110" cy="55" r="0.5" opacity="0.3"/><circle cx="370" cy="52" r="0.6" opacity="0.3"/>
+    <circle cx="620" cy="48" r="0.5" opacity="0.25"/><circle cx="880" cy="56" r="0.5" opacity="0.3"/>
+  </g>
+
+  <!-- Wispy clouds near horizon -->
+  <g fill="white" opacity="0.04">
+    <ellipse cx="350" cy="140" rx="150" ry="10"/><ellipse cx="420" cy="136" rx="90" ry="7"/>
+    <ellipse cx="900" cy="150" rx="130" ry="9"/><ellipse cx="960" cy="146" rx="80" ry="6"/>
+  </g>
+
+  <!-- Far mountain range (Chiltan / Koh-e-Murdar) -->
+  <path d="M0,250 L60,160 L140,215 L220,130 L320,200 L420,100 L520,190 L620,70 L720,180 L820,100 L920,195 L1020,120 L1120,200 L1200,150 L1200,300 L0,300 Z" fill="url(#quettaMtnFar)" opacity="0.85"/>
+  <!-- Near mountain range -->
+  <path d="M0,295 L100,210 L220,265 L340,180 L480,255 L600,195 L740,250 L860,190 L980,260 L1100,200 L1200,250 L1200,300 L0,300 Z" fill="url(#quettaMtnNear)" opacity="0.92"/>
+
+  <!-- Snow caps on far peaks -->
+  <g fill="url(#quettaSnow)" opacity="0.85">
+    <polygon points="620,70 645,100 595,100"/>
+    <polygon points="420,100 442,126 398,126"/>
+    <polygon points="820,100 840,125 800,125"/>
+    <polygon points="220,130 240,155 200,155"/>
+    <polygon points="1020,120 1038,145 1002,145"/>
+  </g>
+  <!-- Snow cap highlights -->
+  <g fill="white" opacity="0.3">
+    <polygon points="620,70 632,88 608,88"/>
+    <polygon points="420,100 430,115 410,115"/>
+    <polygon points="820,100 828,112 812,112"/>
+  </g>
+
+  <!-- Mountain texture/ridgelines -->
+  <g stroke="#5A4A68" stroke-width="0.8" opacity="0.3" fill="none">
+    <path d="M620,70 Q660,120 700,180"/><path d="M620,70 Q580,115 540,170"/>
+    <path d="M420,100 Q450,140 490,190"/><path d="M420,100 Q390,135 360,180"/>
+    <path d="M820,100 Q850,140 880,180"/><path d="M820,100 Q790,135 760,180"/>
+  </g>
+
+  <!-- Ground / valley floor -->
+  <rect y="270" width="1200" height="90" fill="url(#quettaGround)"/>
+
+  <!-- Valley town: clustered rooftops -->
+  <g fill="#6B5A72">
+    <!-- left cluster -->
+    <rect x="300" y="298" width="40" height="28"/><polygon points="300,298 320,280 340,298"/>
+    <rect x="348" y="304" width="35" height="22"/>
+    <rect x="390" y="294" width="48" height="32"/><polygon points="390,294 414,274 438,294"/>
+    <!-- center cluster -->
+    <rect x="470" y="300" width="42" height="26"/>
+    <rect x="520" y="292" width="55" height="34"/><polygon points="520,292 547,268 575,292"/>
+    <rect x="582" y="298" width="38" height="28"/>
+    <!-- right cluster -->
+    <rect x="650" y="296" width="48" height="30"/><polygon points="650,296 674,278 698,296"/>
+    <rect x="706" y="302" width="40" height="24"/>
+    <rect x="755" y="294" width="45" height="32"/>
+    <rect x="808" y="300" width="38" height="26"/>
+    <rect x="854" y="296" width="42" height="30"/><polygon points="854,296 875,280 896,296"/>
+  </g>
+  <!-- Rooftop detail (flat roof lines) -->
+  <g fill="#584A60">
+    <rect x="300" y="298" width="40" height="6"/>
+    <rect x="390" y="294" width="48" height="6"/>
+    <rect x="470" y="300" width="42" height="5"/>
+    <rect x="520" y="292" width="55" height="6"/>
+    <rect x="650" y="296" width="48" height="6"/>
+    <rect x="755" y="294" width="45" height="6"/>
+    <rect x="854" y="296" width="42" height="6"/>
+  </g>
+  <!-- Window lights on houses -->
+  <g fill="#FFD680" opacity="0.5">
+    <rect x="310" y="308" width="4" height="4" rx="0.5"/><rect x="322" y="308" width="4" height="4" rx="0.5"/>
+    <rect x="400" y="304" width="4" height="4" rx="0.5"/><rect x="416" y="304" width="4" height="4" rx="0.5"/>
+    <rect x="480" y="310" width="4" height="4" rx="0.5"/><rect x="494" y="310" width="4" height="4" rx="0.5"/>
+    <rect x="532" y="302" width="4" height="4" rx="0.5"/><rect x="548" y="302" width="4" height="4" rx="0.5"/>
+    <rect x="590" y="308" width="4" height="4" rx="0.5"/>
+    <rect x="660" y="306" width="4" height="4" rx="0.5"/><rect x="676" y="306" width="4" height="4" rx="0.5"/>
+    <rect x="765" y="304" width="4" height="4" rx="0.5"/><rect x="780" y="304" width="4" height="4" rx="0.5"/>
+    <rect x="864" y="306" width="4" height="4" rx="0.5"/><rect x="878" y="306" width="4" height="4" rx="0.5"/>
+  </g>
+
+  <!-- Central mosque dome (town centerpiece) -->
+  <g transform="translate(600,328)">
+    <rect x="-22" y="-60" width="44" height="34" rx="3" fill="#EDE3D8"/>
+    <rect x="-22" y="-60" width="44" height="5" fill="#D8CFC0"/>
+    <path d="M-28,-60 a28,28 0 0 1 56,0 z" fill="#F4EFE6"/>
+    <ellipse cx="0" cy="-60" rx="28" ry="7" fill="#E8DDD0"/>
+    <!-- minaret -->
+    <rect x="-40" y="-85" width="8" height="42" fill="#E8DDD0" rx="1"/>
+    <polygon points="-40,-85 -32,-85 -36,-98" fill="#E8DDD0"/>
+    <rect x="32" y="-85" width="8" height="42" fill="#E8DDD0" rx="1"/>
+    <polygon points="32,-85 40,-85 36,-98" fill="#E8DDD0"/>
+    <!-- finial -->
+    <rect x="-2" y="-96" width="4" height="12" fill="#D8B44A"/>
+    <circle cx="0" cy="-98" r="4" fill="#E4C05A"/>
+    <!-- mosque door -->
+    <path d="M-8,-26 L-8,-40 A8,8 0 0 1 8,-40 L8,-26 Z" fill="#3A2A20"/>
+  </g>
+
+  <!-- Trees scattered in valley -->
+  <g fill="#2A3830" opacity="0.6">
+    <ellipse cx="450" cy="318" rx="10" ry="14"/><rect x="448" y="318" width="4" height="8" fill="#1A2A20"/>
+    <ellipse cx="740" cy="320" rx="8" ry="12"/><rect x="738" y="320" width="4" height="7" fill="#1A2A20"/>
+    <ellipse cx="560" cy="322" rx="7" ry="10"/>
+    <ellipse cx="680" cy="320" rx="9" ry="12"/>
+  </g>
+
+  <!-- Distant road/path -->
+  <path d="M0,335 Q200,328 400,332 T800,330 T1200,334" stroke="#4A3A4E" stroke-width="2" fill="none" opacity="0.3"/>
+
+  <!-- Balochi pattern strip -->
+  <rect y="360" width="1200" height="40" fill="url(#baloch)"/>
+  <rect y="358" width="1200" height="3" fill="#E0A03E"/>
+</svg>

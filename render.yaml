@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: mizaj-al-nas
+    runtime: python
+    # Render uses this as the working directory for all commands
+    rootDir: webapp
+    buildCommand: |
+      pip install -r requirements-hosting.txt
+      python scripts/build_database_hosting.py
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.0"
+      - key: SENTIMENT_MODE
+        value: api
+      - key: HF_TOKEN
+        sync: false   # set manually in Render dashboard
+      - key: GROQ_API_KEY
+        sync: false   # set manually in Render dashboard
+      - key: GROQ_MODEL
+        value: openai/gpt-oss-120b
